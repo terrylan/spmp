@@ -22,6 +22,7 @@ These principles make SPMP ideal for building efficient, secure, and scalable ma
 
 The SPMP framework follows a clear, organized structure to separate concerns and facilitate development:
 
+```
 /spmp_project
 ├── app/
 │   ├── controllers/
@@ -44,7 +45,7 @@ The SPMP framework follows a clear, organized structure to separate concerns and
 │   └── ModManager.php                # vQmod engine for virtual customizations
 ├── config.php                        # Central config file (DB creds, permissions)
 └── .htaccess                         # Enforces HTTPS, routes requests to index.php
-
+```
 
 ### Structure Breakdown
 - **app/**: Houses project-specific MVC components (controllers, models, views).
