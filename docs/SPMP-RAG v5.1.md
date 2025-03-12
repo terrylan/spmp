@@ -291,10 +291,43 @@ future_enhancements:
     ai_integration: "Allow AI to generate UI components via dynamic_templates (e.g., 'Generate a navbar with 3 links')."
   - "Auto-detect hardware specs via PHP (e.g., memory_get_usage()) for real-time optimization."
   - "Expand cloud_recommendations with multi-provider options (AWS, GCP, Azure)."development."
-    implementation: "Extend Template.php with a component system (e.g., navbar, forms) and bundle minimal CSS/JS in public/."
-  - name: "Authentication"
+    implementation: "Extend Template.php with a component system (e.g., navbar, forms) and bundle minimal CSS/JS in public/."  - name: "Authentication"
     description: "Integrate a secure authentication system with login, logout, and session management."
     implementation: "Add Auth.php to core/ with password hashing (e.g., bcrypt) and JWT support; CLI: spmp generate:auth."
+    details:
+      - auth_class:
+          purpose: "Handle user authentication and session management."
+          example:
+            language: "PHP"
+            code: |
+              class Auth {
+                  private $db;
+                  public function __construct($config) {
+                      $this->db = new DB($config);
+                  }
+                  public function login($email, $password) {
+                      $user = $this->db->query("SELECT * FROM users WHERE email = ?", [$email])[0];
+                      if ($user && password_verify($password, $user['password'])) {
+                          $_SESSION['user_id'] = $user['id'];
+                          return true;
+                      }
+                      return false;
+                  }
+                  public function logout() {
+                      unset($_SESSION['user_id']);
+                      session_destroy();
+                  }
+                  public function generateJWT($userId) {
+                      $payload = ['user_id' => $userId, 'exp' => time() + 3600];
+                      return JWT::encode($payload, 'secret_key');  # Requires lightweight JWT library
+                  }
+              }
+      - cli_setup:
+          purpose: "Generate authentication scaffolding (controller, model, view)."
+          example: "spmp generate:auth creates AuthController.php, UserModel.php with password field, and login.php view."
+    ai_integration: "Enable AI to generate auth flows (e.g., 'Generate a login system with JWT') via dynamic_templates."
+  - "Auto-detect hardware specs via PHP (e.g., memory_get_usage()) for real-time optimization."
+  - "Expand cloud_recommendations with multi-provider options (AWS, GCP, Azure)."
   - name: "Role-Based Access Control (RBAC)"
     description: "Implement RBAC for user permissions (e.g., admin, editor, viewer)."
     implementation: "Extend Security.php with role checks (e.g., $security->hasRole('admin')); store roles in DB.php."
