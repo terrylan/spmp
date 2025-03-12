@@ -267,6 +267,31 @@ future_enhancements:
   - name: "Frontend UI"
     description: "Add a built-in frontend framework (e.g., lightweight PHP-based templating with CSS/JS) for rapid UI development."
     implementation: "Extend Template.php with a component system (e.g., navbar, forms) and bundle minimal CSS/JS in public/."
+    details:
+      - component_system:
+          purpose: "Enable reusable UI elements for consistency and speed."
+          example:
+            language: "PHP"
+            code: |
+              class Template {
+                  public function renderComponent($name, $data = []) {
+                      extract($data);
+                      require_once "../app/views/components/{$name}.php";
+                  }
+                  public function render($file, $data = []) {
+                      extract($data);
+                      $this->renderComponent('header', ['title' => $title]);
+                      require_once "../app/views/{$file}.php";
+                      $this->renderComponent('footer');
+                  }
+              }
+      - assets:
+          purpose: "Provide minimal styling and interactivity."
+          example: "public/css/spmp.css with CSS variables (e.g., --primary-color) and public/js/spmp.js for basic DOM manipulation."
+    ai_integration: "Allow AI to generate UI components via dynamic_templates (e.g., 'Generate a navbar with 3 links')."
+  - "Auto-detect hardware specs via PHP (e.g., memory_get_usage()) for real-time optimization."
+  - "Expand cloud_recommendations with multi-provider options (AWS, GCP, Azure)."development."
+    implementation: "Extend Template.php with a component system (e.g., navbar, forms) and bundle minimal CSS/JS in public/."
   - name: "Authentication"
     description: "Integrate a secure authentication system with login, logout, and session management."
     implementation: "Add Auth.php to core/ with password hashing (e.g., bcrypt) and JWT support; CLI: spmp generate:auth."
