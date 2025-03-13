@@ -262,6 +262,7 @@ api:
       url: "https://api.sap.com/erp"
       purpose: "Integrate enterprise data."
 
+
 ## 10. Future Enhancements & RAG Integration Plan
 future_enhancements:
   - name: "Frontend UI"
@@ -289,9 +290,7 @@ future_enhancements:
           purpose: "Provide minimal styling and interactivity."
           example: "public/css/spmp.css with CSS variables (e.g., --primary-color) and public/js/spmp.js for basic DOM manipulation."
     ai_integration: "Allow AI to generate UI components via dynamic_templates (e.g., 'Generate a navbar with 3 links')."
-  - "Auto-detect hardware specs via PHP (e.g., memory_get_usage()) for real-time optimization."
-  - "Expand cloud_recommendations with multi-provider options (AWS, GCP, Azure)."development."
-    implementation: "Extend Template.php with a component system (e.g., navbar, forms) and bundle minimal CSS/JS in public/."
+
   - name: "Authentication"
     description: "Integrate a secure authentication system with login, logout, and session management."
     implementation: "Add Auth.php to core/ with password hashing (e.g., bcrypt) and JWT support; CLI: spmp generate:auth."
@@ -320,15 +319,14 @@ future_enhancements:
                   }
                   public function generateJWT($userId) {
                       $payload = ['user_id' => $userId, 'exp' => time() + 3600];
-                      return JWT::encode($payload, 'secret_key');  # Requires lightweight JWT library
+                      return JWT::encode($payload, 'secret_key');
                   }
               }
       - cli_setup:
           purpose: "Generate authentication scaffolding (controller, model, view)."
           example: "spmp generate:auth creates AuthController.php, UserModel.php with password field, and login.php view."
     ai_integration: "Enable AI to generate auth flows (e.g., 'Generate a login system with JWT') via dynamic_templates."
-  - "Auto-detect hardware specs via PHP (e.g., memory_get_usage()) for real-time optimization."
-  - "Expand cloud_recommendations with multi-provider options (AWS, GCP, Azure)."
+
   - name: "Role-Based Access Control (RBAC)"
     description: "Implement RBAC for user permissions (e.g., admin, editor, viewer) to control access within applications."
     implementation: "Extend Security.php with role checks (e.g., $security->hasRole('admin')); store roles in DB.php and integrate with Auth.php."
@@ -354,11 +352,10 @@ future_enhancements:
                       }
                   }
               }
-              // Usage in controller
               class InventoryController {
                   public function deleteItem($id) {
                       $security = new Security(require 'config.php');
-                      $security->restrict('admin');  # Only admins can delete
+                      $security->restrict('admin');
                       // Delete logic...
                   }
               }
@@ -378,8 +375,7 @@ future_enhancements:
           purpose: "Generate RBAC scaffolding (role management, permissions)."
           example: "spmp generate:rbac creates RoleController.php, updates UserModel.php, and adds role views."
     ai_integration: "Enable AI to generate role-specific logic (e.g., 'Restrict this to admins') via dynamic_templates."
-  - "Auto-detect hardware specs via PHP (e.g., memory_get_usage()) for real-time optimization."
-  - "Expand cloud_recommendations with multi-provider options (AWS, GCP, Azure)."
+
   - name: "GraphQL Support"
     description: "Add GraphQL API endpoints for flexible data querying, enhancing REST capabilities."
     implementation: "Introduce GraphQL.php in core/ using a lightweight library (e.g., webonyx/graphql-php); CLI: spmp generate:graphql [MODEL]."
@@ -423,11 +419,10 @@ future_enhancements:
                       return GraphQL::executeQuery($schema, $query)->toArray();
                   }
               }
-              // Usage in controller
               class ApiController {
                   public function graphql() {
                       $graphql = new GraphQL(require 'config.php');
-                      $query = file_get_contents('php://input');  # e.g., "{ notes { id title } }"
+                      $query = file_get_contents('php://input');
                       return json_encode($graphql->handle($query));
                   }
               }
@@ -435,8 +430,7 @@ future_enhancements:
           purpose: "Generate GraphQL scaffolding (schema, resolvers)."
           example: "spmp generate:graphql Note creates NoteType.php and integrates with ApiController.php."
     ai_integration: "Enable AI to generate GraphQL schemas (e.g., 'Create a GraphQL API for notes') via dynamic_templates."
-  - "Auto-detect hardware specs via PHP (e.g., memory_get_usage()) for real-time optimization."
-  - "Expand cloud_recommendations with multi-provider options (AWS, GCP, Azure)."
+
   - name: "Multi-Tenancy"
     description: "Enable tenant-based database switching for multi-client applications."
     implementation: "Modify DB.php to switch schemas (e.g., $db->setTenant('client1')); config.php tenant mapping."
@@ -462,7 +456,6 @@ future_enhancements:
                       $this->pdo = new PDO($dsn, $config['user'], $config['pass']);
                   }
                   private function loadTenantConfig($tenantId) {
-                      // Example tenant config from config.php
                       return require 'config.php'['tenants'][$tenantId];
                   }
                   public function query($sql, $params = []) {
@@ -471,11 +464,10 @@ future_enhancements:
                       return $stmt->fetchAll();
                   }
               }
-              // Usage in controller
               class NoteController {
                   public function create($data) {
                       $db = new DB(require 'config.php');
-                      $db->setTenant('client1');  # Switch to client1’s DB
+                      $db->setTenant('client1');
                       $note = $db->query("INSERT INTO notes (title, content) VALUES (?, ?)", [$data['title'], $data['content']]);
                       return $note;
                   }
@@ -496,8 +488,7 @@ future_enhancements:
           purpose: "Generate multi-tenant scaffolding."
           example: "spmp generate:tenant [TENANT_ID] creates tenant DB and updates config.php."
     ai_integration: "Enable AI to generate tenant-specific logic (e.g., 'Set up client1’s DB') via dynamic_templates."
-  - "Auto-detect hardware specs via PHP (e.g., memory_get_usage()) for real-time optimization."
-  - "Expand cloud_recommendations with multi-provider options (AWS, GCP, Azure)."
+
   - name: "Background Processing"
     description: "Enhance queue system for robust background tasks (e.g., emails, reports)."
     implementation: "Expand Queue.php with worker management and retry logic; integrate with Redis or file-based queues."
@@ -508,7 +499,7 @@ future_enhancements:
             language: "PHP"
             code: |
               class Queue {
-                  private $storage;  # Redis or file-based
+                  private $storage;
                   public function __construct($config) {
                       $this->storage = $config['features']['redis'] ? new Redis() : new FileStorage();
                   }
@@ -523,7 +514,7 @@ future_enhancements:
                               $this->process($task['job'], $task['data']);
                           } catch (Exception $e) {
                               if ($task['attempts']++ < 3) {
-                                  $this->storage->add('queue', json_encode($task));  # Retry
+                                  $this->storage->add('queue', json_encode($task));
                               }
                           }
                       }
@@ -532,27 +523,154 @@ future_enhancements:
                       // e.g., send email, generate report
                   }
               }
-              // Usage
               $queue = new Queue(require 'config.php');
               $queue->push('send_email', ['to' => 'user@example.com', 'msg' => 'Hi']);
       - cli_setup:
           purpose: "Generate queue scaffolding and workers."
           example: "spmp generate:queue [JOB_NAME] creates QueueJob_[JOB_NAME].php."
     ai_integration: "Enable AI to generate task-specific queues (e.g., 'Queue email sends') via dynamic_templates."
-  - "Auto-detect hardware specs via PHP (e.g., memory_get_usage()) for real-time optimization."
-  - "Expand cloud_recommendations with multi-provider options (AWS, GCP, Azure)."
+
   - name: "Cloud File Storage"
     description: "Support cloud storage (e.g., AWS S3, Google Cloud Storage) for file uploads."
     implementation: "Add Storage.php in core/ with adapters for S3/GCS; CLI: spmp generate:storage [PROVIDER]."
+    details:
+      - storage_system:
+          purpose: "Enable scalable file management in the cloud."
+          example:
+            language: "PHP"
+            code: |
+              class Storage {
+                  private $adapter;
+                  public function __construct($config) {
+                      $this->adapter = $config['storage']['provider'] === 's3' 
+                          ? new S3Adapter($config['s3']) 
+                          : new GCSAdapter($config['gcs']);
+                  }
+                  public function upload($filePath, $destination) {
+                      $this->adapter->put($filePath, $destination);
+                  }
+                  public function download($source, $localPath) {
+                      $this->adapter->get($source, $localPath);
+                  }
+              }
+              $storage = new Storage(require 'config.php');
+              $storage->upload('note.txt', 'client1/notes/note.txt');
+      - config_example:
+          purpose: "Define cloud provider settings."
+          example:
+            language: "PHP"
+            code: |
+              $config = [
+                  'storage' => [
+                      'provider' => 's3',
+                      's3' => ['key' => 'YOUR_KEY', 'secret' => 'YOUR_SECRET', 'bucket' => 'spmp-bucket']
+                  ]
+              ];
+      - cli_setup:
+          purpose: "Generate storage scaffolding."
+          example: "spmp generate:storage s3 creates S3Adapter.php and updates config.php."
+    ai_integration: "Enable AI to generate storage logic (e.g., 'Upload to S3') via dynamic_templates."
+
   - name: "WebSockets (Real-Time)"
-    description: "Fully integrate WebSockets for real-time features (e.g., notifications, live updates)."
-    implementation: "Enhance Router.php with Swoole WebSocket server; add WebSocket.php for event broadcasting."
+    description: "Add WebSocket support for real-time features (e.g., live updates, chat)."
+    implementation: "Integrate Swoole or Ratchet in core/ via WebSocket.php; CLI: spmp generate:websocket [ENDPOINT]."
+    details:
+      - websocket_system:
+          purpose: "Enable real-time bidirectional communication."
+          example:
+            language: "PHP"
+            code: |
+              use Swoole\WebSocket\Server;
+              class WebSocket {
+                  private $server;
+                  public function __construct($config) {
+                      $this->server = new Server($config['host'], $config['port']);
+                      $this->server->on('open', [$this, 'onOpen']);
+                      $this->server->on('message', [$this, 'onMessage']);
+                  }
+                  public function onOpen($server, $request) {
+                      echo "Client connected: {$request->fd}\n";
+                  }
+                  public function onMessage($server, $frame) {
+                      $server->push($frame->fd, "Echo: {$frame->data}");
+                  }
+                  public function start() {
+                      $this->server->start();
+                  }
+              }
+              // Usage
+              $ws = new WebSocket(['host' => '0.0.0.0', 'port' => 9501]);
+              $ws->start();
+      - cli_setup:
+          purpose: "Generate WebSocket endpoint scaffolding."
+          example: "spmp generate:websocket chat creates WebSocketChat.php with onMessage logic."
+    ai_integration: "Enable AI to generate real-time logic (e.g., 'Create a chat endpoint') via dynamic_templates."
+
   - name: "Plugin System"
-    description: "Formalize a plugin ecosystem for easy feature extensions."
-    implementation: "Create plugins/ directory with manifest (plugin.yml) and auto-loading via ModManager.php."
+    description: "Implement a plugin system for extensible functionality (e.g., custom modules)."
+    implementation: "Add Plugin.php in core/ with a registry; CLI: spmp generate:plugin [NAME]."
+    details:
+      - plugin_system:
+          purpose: "Allow modular extensions without core modification."
+          example:
+            language: "PHP"
+            code: |
+              class Plugin {
+                  private $registry = [];
+                  public function register($name, $class) {
+                      $this->registry[$name] = new $class();
+                  }
+                  public function load($name) {
+                      return $this->registry[$name] ?? null;
+                  }
+              }
+              // Plugin example: app/plugins/LoggerPlugin.php
+              class LoggerPlugin {
+                  public function log($message) {
+                      file_put_contents('log.txt', $message . PHP_EOL, FILE_APPEND);
+                  }
+              }
+              // Usage in core
+              $plugin = new Plugin();
+              $plugin->register('logger', 'LoggerPlugin');
+              $logger = $plugin->load('logger');
+              $logger->log('User logged in');
+      - cli_setup:
+          purpose: "Generate plugin scaffolding."
+          example: "spmp generate:plugin logger creates app/plugins/LoggerPlugin.php and registers it."
+    ai_integration: "Enable AI to generate plugins (e.g., 'Create a logging plugin') via dynamic_templates."
+
   - name: "AI IDE Integration"
-    description: "Enable integration with AI-powered IDEs (e.g., VS Code with GitHub Copilot) for real-time code suggestions."
-    implementation: "Add AI snippets metadata (e.g., @AI-SUGGEST) and a CLI hook: spmp ai:integrate [IDE]."
+    description: "Connect SPMP to AI-driven IDEs for seamless code generation and editing."
+    implementation: "Add IDEApi.php in core/ with endpoints for AI tools; CLI: spmp generate:ide-hook [TASK]."
+    details:
+      - ide_api:
+          purpose: "Expose SPMP’s generation capabilities to IDEs (e.g., VS Code plugins)."
+          example:
+            language: "PHP"
+            code: |
+              class IDEApi {
+                  private $templates;
+                  public function __construct($config) {
+                      $this->templates = new DynamicTemplates($config);
+                  }
+                  public function generate($task) {
+                      return $this->templates->generate($task);  # e.g., "Create a controller"
+                  }
+              }
+              // API endpoint
+              class ApiController {
+                  public function ideHook() {
+                      $api = new IDEApi(require 'config.php');
+                      $task = json_decode(file_get_contents('php://input'), true)['task'];
+                      return json_encode($api->generate($task));
+                  }
+              }
+      - cli_setup:
+          purpose: "Generate IDE hook scaffolding."
+          example: "spmp generate:ide-hook model creates an API endpoint for model generation."
+    ai_integration: "Enable AI to interface with IDEs via dynamic_templates (e.g., 'Generate a model in VS Code')."
+
   - "Auto-detect hardware specs via PHP (e.g., memory_get_usage()) for real-time optimization."
   - "Expand cloud_recommendations with multi-provider options (AWS, GCP, Azure)."
 
