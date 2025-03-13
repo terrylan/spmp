@@ -291,7 +291,8 @@ future_enhancements:
     ai_integration: "Allow AI to generate UI components via dynamic_templates (e.g., 'Generate a navbar with 3 links')."
   - "Auto-detect hardware specs via PHP (e.g., memory_get_usage()) for real-time optimization."
   - "Expand cloud_recommendations with multi-provider options (AWS, GCP, Azure)."development."
-    implementation: "Extend Template.php with a component system (e.g., navbar, forms) and bundle minimal CSS/JS in public/."  - name: "Authentication"
+    implementation: "Extend Template.php with a component system (e.g., navbar, forms) and bundle minimal CSS/JS in public/."
+  - name: "Authentication"
     description: "Integrate a secure authentication system with login, logout, and session management."
     implementation: "Add Auth.php to core/ with password hashing (e.g., bcrypt) and JWT support; CLI: spmp generate:auth."
     details:
@@ -329,8 +330,56 @@ future_enhancements:
   - "Auto-detect hardware specs via PHP (e.g., memory_get_usage()) for real-time optimization."
   - "Expand cloud_recommendations with multi-provider options (AWS, GCP, Azure)."
   - name: "Role-Based Access Control (RBAC)"
-    description: "Implement RBAC for user permissions (e.g., admin, editor, viewer)."
-    implementation: "Extend Security.php with role checks (e.g., $security->hasRole('admin')); store roles in DB.php."
+    description: "Implement RBAC for user permissions (e.g., admin, editor, viewer) to control access within applications."
+    implementation: "Extend Security.php with role checks (e.g., $security->hasRole('admin')); store roles in DB.php and integrate with Auth.php."
+    details:
+      - rbac_system:
+          purpose: "Manage user roles and permissions for secure, granular access."
+          example:
+            language: "PHP"
+            code: |
+              class Security {
+                  private $db;
+                  public function __construct($config) {
+                      $this->db = new DB($config);
+                  }
+                  public function hasRole($userId, $role) {
+                      $roles = $this->db->query("SELECT role FROM user_roles WHERE user_id = ?", [$userId]);
+                      return in_array($role, array_column($roles, 'role'));
+                  }
+                  public function restrict($requiredRole) {
+                      $userId = $_SESSION['user_id'] ?? null;
+                      if (!$userId || !$this->hasRole($userId, $requiredRole)) {
+                          die("Access denied");
+                      }
+                  }
+              }
+              // Usage in controller
+              class InventoryController {
+                  public function deleteItem($id) {
+                      $security = new Security(require 'config.php');
+                      $security->restrict('admin');  # Only admins can delete
+                      // Delete logic...
+                  }
+              }
+      - schema:
+          purpose: "Store roles in the database."
+          example:
+            language: "SQL"
+            code: |
+              CREATE TABLE user_roles (
+                  user_id INT,
+                  role VARCHAR(50),
+                  PRIMARY KEY (user_id, role),
+                  FOREIGN KEY (user_id) REFERENCES users(id)
+              );
+              INSERT INTO user_roles (user_id, role) VALUES (1, 'admin'), (2, 'editor');
+      - cli_setup:
+          purpose: "Generate RBAC scaffolding (role management, permissions)."
+          example: "spmp generate:rbac creates RoleController.php, updates UserModel.php, and adds role views."
+    ai_integration: "Enable AI to generate role-specific logic (e.g., 'Restrict this to admins') via dynamic_templates."
+  - "Auto-detect hardware specs via PHP (e.g., memory_get_usage()) for real-time optimization."
+  - "Expand cloud_recommendations with multi-provider options (AWS, GCP, Azure)."
   - name: "GraphQL Support"
     description: "Add GraphQL API endpoints for flexible data querying."
     implementation: "Introduce GraphQL.php in core/ using a lightweight library (e.g., webonyx/graphql-php); CLI: spmp generate:graphql [MODEL]."
