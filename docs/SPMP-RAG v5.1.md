@@ -381,14 +381,166 @@ future_enhancements:
   - "Auto-detect hardware specs via PHP (e.g., memory_get_usage()) for real-time optimization."
   - "Expand cloud_recommendations with multi-provider options (AWS, GCP, Azure)."
   - name: "GraphQL Support"
-    description: "Add GraphQL API endpoints for flexible data querying."
+    description: "Add GraphQL API endpoints for flexible data querying, enhancing REST capabilities."
     implementation: "Introduce GraphQL.php in core/ using a lightweight library (e.g., webonyx/graphql-php); CLI: spmp generate:graphql [MODEL]."
+    details:
+      - graphql_system:
+          purpose: "Provide a schema-driven API for efficient data access."
+          example:
+            language: "PHP"
+            code: |
+              use GraphQL\Type\Definition\Type;
+              use GraphQL\Type\Definition\ObjectType;
+              class GraphQL {
+                  private $db;
+                  public function __construct($config) {
+                      $this->db = new DB($config);
+                  }
+                  public function setupSchema() {
+                      $noteType = new ObjectType([
+                          'name' => 'Note',
+                          'fields' => [
+                              'id' => Type::int(),
+                              'title' => Type::string(),
+                              'content' => Type::string()
+                          ]
+                      ]);
+                      $queryType = new ObjectType([
+                          'name' => 'Query',
+                          'fields' => [
+                              'notes' => [
+                                  'type' => Type::listOf($noteType),
+                                  'resolve' => function() {
+                                      return $this->db->query("SELECT * FROM notes");
+                                  }
+                              ]
+                          ]
+                      ]);
+                      return new GraphQL\Schema(['query' => $queryType]);
+                  }
+                  public function handle($query) {
+                      $schema = $this->setupSchema();
+                      return GraphQL::executeQuery($schema, $query)->toArray();
+                  }
+              }
+              // Usage in controller
+              class ApiController {
+                  public function graphql() {
+                      $graphql = new GraphQL(require 'config.php');
+                      $query = file_get_contents('php://input');  # e.g., "{ notes { id title } }"
+                      return json_encode($graphql->handle($query));
+                  }
+              }
+      - cli_setup:
+          purpose: "Generate GraphQL scaffolding (schema, resolvers)."
+          example: "spmp generate:graphql Note creates NoteType.php and integrates with ApiController.php."
+    ai_integration: "Enable AI to generate GraphQL schemas (e.g., 'Create a GraphQL API for notes') via dynamic_templates."
+  - "Auto-detect hardware specs via PHP (e.g., memory_get_usage()) for real-time optimization."
+  - "Expand cloud_recommendations with multi-provider options (AWS, GCP, Azure)."
   - name: "Multi-Tenancy"
     description: "Enable tenant-based database switching for multi-client applications."
     implementation: "Modify DB.php to switch schemas (e.g., $db->setTenant('client1')); config.php tenant mapping."
+    details:
+      - tenant_system:
+          purpose: "Support multiple clients with isolated data in one app instance."
+          example:
+            language: "PHP"
+            code: |
+              class DB {
+                  private $pdo;
+                  private $tenant;
+                  public function __construct($config) {
+                      $this->connect($config['default']);
+                  }
+                  public function setTenant($tenantId) {
+                      $this->tenant = $tenantId;
+                      $config = $this->loadTenantConfig($tenantId);
+                      $this->connect($config);
+                  }
+                  private function connect($config) {
+                      $dsn = "mysql:host={$config['host']};dbname={$config['dbname']}_{$this->tenant}";
+                      $this->pdo = new PDO($dsn, $config['user'], $config['pass']);
+                  }
+                  private function loadTenantConfig($tenantId) {
+                      // Example tenant config from config.php
+                      return require 'config.php'['tenants'][$tenantId];
+                  }
+                  public function query($sql, $params = []) {
+                      $stmt = $this->pdo->prepare($sql);
+                      $stmt->execute($params);
+                      return $stmt->fetchAll();
+                  }
+              }
+              // Usage in controller
+              class NoteController {
+                  public function create($data) {
+                      $db = new DB(require 'config.php');
+                      $db->setTenant('client1');  # Switch to client1’s DB
+                      $note = $db->query("INSERT INTO notes (title, content) VALUES (?, ?)", [$data['title'], $data['content']]);
+                      return $note;
+                  }
+              }
+      - config_example:
+          purpose: "Define tenant-specific database settings."
+          example:
+            language: "PHP"
+            code: |
+              $config = [
+                  'default' => ['host' => 'localhost', 'user' => 'root', 'pass' => ''],
+                  'tenants' => [
+                      'client1' => ['dbname' => 'spmp_client1'],
+                      'client2' => ['dbname' => 'spmp_client2']
+                  ]
+              ];
+      - cli_setup:
+          purpose: "Generate multi-tenant scaffolding."
+          example: "spmp generate:tenant [TENANT_ID] creates tenant DB and updates config.php."
+    ai_integration: "Enable AI to generate tenant-specific logic (e.g., 'Set up client1’s DB') via dynamic_templates."
+  - "Auto-detect hardware specs via PHP (e.g., memory_get_usage()) for real-time optimization."
+  - "Expand cloud_recommendations with multi-provider options (AWS, GCP, Azure)."
   - name: "Background Processing"
     description: "Enhance queue system for robust background tasks (e.g., emails, reports)."
     implementation: "Expand Queue.php with worker management and retry logic; integrate with Redis or file-based queues."
+    details:
+      - queue_system:
+          purpose: "Manage asynchronous tasks with reliability and scalability."
+          example:
+            language: "PHP"
+            code: |
+              class Queue {
+                  private $storage;  # Redis or file-based
+                  public function __construct($config) {
+                      $this->storage = $config['features']['redis'] ? new Redis() : new FileStorage();
+                  }
+                  public function push($job, $data) {
+                      $task = ['job' => $job, 'data' => $data, 'attempts' => 0];
+                      $this->storage->add('queue', json_encode($task));
+                  }
+                  public function worker() {
+                      while ($task = $this->storage->pop('queue')) {
+                          $task = json_decode($task, true);
+                          try {
+                              $this->process($task['job'], $task['data']);
+                          } catch (Exception $e) {
+                              if ($task['attempts']++ < 3) {
+                                  $this->storage->add('queue', json_encode($task));  # Retry
+                              }
+                          }
+                      }
+                  }
+                  private function process($job, $data) {
+                      // e.g., send email, generate report
+                  }
+              }
+              // Usage
+              $queue = new Queue(require 'config.php');
+              $queue->push('send_email', ['to' => 'user@example.com', 'msg' => 'Hi']);
+      - cli_setup:
+          purpose: "Generate queue scaffolding and workers."
+          example: "spmp generate:queue [JOB_NAME] creates QueueJob_[JOB_NAME].php."
+    ai_integration: "Enable AI to generate task-specific queues (e.g., 'Queue email sends') via dynamic_templates."
+  - "Auto-detect hardware specs via PHP (e.g., memory_get_usage()) for real-time optimization."
+  - "Expand cloud_recommendations with multi-provider options (AWS, GCP, Azure)."
   - name: "Cloud File Storage"
     description: "Support cloud storage (e.g., AWS S3, Google Cloud Storage) for file uploads."
     implementation: "Add Storage.php in core/ with adapters for S3/GCS; CLI: spmp generate:storage [PROVIDER]."
