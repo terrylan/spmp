@@ -7,7 +7,7 @@ language: "PHP"
 architecture: "MVC"
 features: [Lightweight, Secure, Extendable, AI-Ready, Scalable, Adaptive, Lean]
 use_cases: [Notes-Taking, CMS, LMS, CRM, ERP, HRMS, PMS, WMS]
-author: "Terry Lan"
+author: "Terrylan Manalansan"
 last_updated: "2025-03-13"
 description: "A lean, adaptive PHP MVC framework generating exact software for exact hardware and user needs."
 scalability_note: "Scales from 1 user on 4GB Linux device to 50,000+ users on optimized cloud."
