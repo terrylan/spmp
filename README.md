@@ -12,49 +12,51 @@ SPMP provides a structured approach to PHP-based development, emphasizing:
 ## Getting Started
 The repository contains essential documentation for understanding and configuring SPMP:
 1. **Reference Documents**:
-   - `docs/SPMP-RAG.md`: Core framework principles, structure, and AI-driven optimizations.
+   - `docs/SPMP-RAG.v6.1.yaml`: Core framework principles, structure, and AI-driven optimizations (updated as of March 16, 2025).
    - `docs/SPMP-Project.md`: A structured template for defining project specifications.
    - `examples/SimpleERP.md`: A sample project specification for an ERP system.
 
 2. **Define Your Project**:
-
-To customize SPMP for a specific use case, fill out SPMP-Project.md with project details. The template covers essential configurations, including:
-
+   To customize SPMP for a specific use case, fill out `SPMP-Project.md` with project details. The template covers essential configurations, including:
    - Database and security settings
    - Role-based access requirements
    - Feature customization (e.g., caching, real-time updates, API support)
 
 3. **AI-Assisted Code Generation**:
-
-SPMP integrates with AI-assisted tools for automated project generation. Example workflow:
-
-   - Attach SPMP-RAG.md and SPMP-Project.md to an AI prompt.
+   SPMP integrates with AI-assisted tools for automated project generation. Example workflow:
+   - Attach `SPMP-RAG.v6.1.yaml` and `SPMP-Project.md` to an AI prompt.
    - Use an instruction such as: "Generate an SPMP-based application using the attached project specifications."
    - The AI will generate code tailored to the provided constraints.
 
 ## Key Features
-
-- Dynamic AI Templates – Configurable models, controllers, and database layers based on project needs.
-- Hardware-Aware Optimizations – Automatically adjusts caching, queuing, and database preferences based on system specifications.
-- Modular Structure – Supports additional plugins and virtual modifications (vQmod) without modifying core files.
-- Security Enhancements – Includes authentication, role-based access control (RBAC), and API token management.
-- Multi-Tenancy & Cloud Support – Configurable for isolated user environments and scalable cloud deployments.
+- **Dynamic AI Templates** – Configurable models, controllers, and database layers based on project needs.
+- **Hardware-Aware Optimizations** – Automatically adjusts caching, queuing, and database preferences based on system specifications.
+- **Modular Structure** – Supports additional plugins and virtual modifications (vQmod) without modifying core files.
+- **Security Enhancements** – Includes authentication, role-based access control (RBAC), and API token management.
+- **Multi-Tenancy & Cloud Support** – Configurable for isolated user environments and scalable cloud deployments.
 
 ## Future Enhancements
-
-Several future improvements are planned to further extend SPMP’s capabilities:
-
-- Frontend UI Framework – A lightweight PHP-based templating system with built-in CSS/JS for rapid UI development.
-- Advanced Authentication – Support for JWT authentication, social logins, and two-factor authentication.
-- Role-Based Access Control (RBAC) – Granular user permissions, admin controls, and access logging.
-- GraphQL API Support – Flexible, schema-based API queries for more efficient data retrieval.
-- Multi-Tenancy Enhancements – Automated database separation and tenant management for SaaS applications.
-- Background Processing & Queues – Robust task scheduling, job retry mechanisms, and async processing.
-- Cloud File Storage Integration – Support for AWS S3, Google Cloud Storage, and other cloud storage providers.
-- WebSockets for Real-Time Features – Native WebSocket support for live updates, messaging, and notifications.
-- Plugin System – Extensible plugin architecture to allow feature expansion without modifying core files.
-- AI IDE Integration – Direct support for AI-assisted development within IDEs (e.g., VS Code, PHPStorm).
-- Auto Hardware Detection – Intelligent resource allocation based on server specifications.
+The following improvements are planned to extend SPMP’s capabilities in version 6.1 and beyond:
+- **Progressive Web App (PWA) Support** – Enable offline capabilities, push notifications, and app-like experiences.
+- **Serverless Deployment** – Adapt SPMP for serverless architectures (e.g., AWS Lambda) for cost-effective scaling.
+- **Microservices Architecture** – Break SPMP into modular services for distributed deployments.
+- **AI-Powered Analytics** – Integrate real-time user behavior and performance analytics with AI insights.
+- **Natural Language Processing (NLP) Integration** – Add chatbots or voice commands to SPMP apps.
+- **Low-Code/No-Code Interface** – Provide a visual builder for non-developers to create apps.
+- **Blockchain Integration** – Support secure transactions and data integrity via blockchain.
+- **Edge Computing Optimization** – Optimize for low-latency processing on edge devices (e.g., IoT).
+- **Multi-Language Support (i18n)** – Enable internationalization for multilingual apps.
+- **Automated Testing Framework** – Build a suite for unit, integration, and performance tests.
+- **Containerization Support** – Provide Docker/Kubernetes integration for easy deployment.
+- **Dynamic Theme Engine** – Allow runtime theme switching (e.g., light/dark mode).
+- **Rate Limiting and Throttling** – Protect apps from abuse with request limits.
+- **Offline-First Data Sync** – Enable offline functionality with automatic syncing.
+- **Voice Command Interface** – Integrate voice recognition for hands-free control.
+- **AI-Driven Code Refactoring** – Use AI to optimize and improve code quality.
+- **Cross-Platform Mobile Support** – Generate mobile apps (iOS/Android) using frameworks like Capacitor.
+- **Predictive Caching** – Pre-cache data based on AI-predicted user behavior.
+- **Zero-Downtime Updates** – Enable seamless updates without interrupting users.
+- **Quantum Computing Readiness** – Prepare SPMP for future quantum computing environments.
 
 ## License
 MIT License - feel free to use, modify, and share!
