@@ -1,0 +1,749 @@
+# SPMP-RAG: AI-Optimized Standard PHP-MVC-Principles (Lean & Adaptive v6.1)
+
+metadata:
+  title: "SPMP-RAG Framework Guide"
+  version: "6.1"
+  language: "PHP"
+  architecture: "MVC"
+  features:
+    - Lightweight
+    - Secure
+    - Extendable
+    - AI-Ready
+    - Scalable
+    - Adaptive
+    - Lean
+  use_cases:
+    - Notes-Taking
+    - CMS
+    - LMS
+    - CRM
+    - ERP
+    - HRMS
+    - PMS
+    - WMS
+  author: "Terrylan Manalansan"
+  last_updated: "2025-03-16"
+  description: "A lean, adaptive PHP MVC framework generating exact software for exact hardware and user needs."
+  scalability_note: "Scales from 1 user on 4GB Linux device to 50,000+ users on optimized cloud."
+  competitive_edge: "Rivals Laravel/Symfony with lightweight core, AI-driven adaptability, and hardware-specific optimization."
+
+ai_query_instructions:
+  sample_queries:
+    - "Generate a notes app for a 4GB RAM Linux device with 1 user."
+    - "Build an ERP for 10,000 users on AWS cloud with cost estimate."
+    - "Optimize my app for a small device with 2GB RAM."
+    - "Set up a single-user notes-taking system like Google Keep."
+    - "Generate an ERP with inventory, HR, and real-time reporting for 10,000 users."
+  hardware_context:
+    - field: "cpu"
+      example: "1.1GHz Celeron N3450"
+    - field: "ram"
+      example: "4GB"
+    - field: "os"
+      example: "Linux"
+    - field: "user_count"
+      example: "1, 100, 10000"
+  generation_rules:
+    - rule: "If ram < 8GB, use file-based Cache.php, skip Redis and Swoole."
+    - rule: "If user_count < 10, disable Queue.php and middleware."
+    - rule: "For 'ERP' and user_count > 1000, enable full stack with cloud_recommendations."
+  dynamic_templates:
+    - name: "NotesSystem"
+      function_tag: "@NOTES"
+      template: |
+        class NoteController {
+            public function create($data) {
+                $note = Note::create(['title' => $data['title'], 'content' => $data['content']]);
+                [CACHE_LOGIC]
+                return $note;
+            }
+        }
+      variables:
+        - name: "CACHE_LOGIC"
+          options:
+            - condition: "ram < 8GB"
+              code: "$cache = new Cache(); $cache->setFile('note_{$note->id}', $note);"
+            - condition: "ram >= 8GB"
+              code: "$cache = new Cache(); $cache->setRedis('note_{$note->id}', $note);"
+    - name: "ERPSystem"
+      function_tag: "@ERP"
+      template: |
+        class InventoryController {
+            public function addItem($data) {
+                $item = Item::create($data);
+                [QUEUE_LOGIC]
+                return $item;
+            }
+        }
+      variables:
+        - name: "QUEUE_LOGIC"
+          options:
+            - condition: "user_count < 100"
+              code: "// No queue for small scale"
+            - condition: "user_count >= 100"
+              code: "Queue::push('process_inventory', ['item_id' => $item->id]);"
+  cloud_recommendations:
+    - user_range: "1-100"
+      spec: "AWS t3.micro (1 vCPU, 1GB RAM), ~$10/month"
+      purpose: "Notes app or small CMS."
+    - user_range: "1000-10000"
+      spec: "AWS t3.large (2 vCPUs, 8GB RAM), ~$80/month"
+      purpose: "Medium ERP or CRM."
+    - user_range: "10000-50000"
+      spec: "AWS m5.2xlarge (8 vCPUs, 32GB RAM), ~$400/month"
+      purpose: "Full ERP with real-time features."
+
+installation:
+  requirements:
+    - "PHP 8.0+ (with optional Swoole extension for async)"
+    - "MySQL/MariaDB 5.7+ or Redis 5.0+ (optional)"
+    - "Apache/Nginx with optional WebSocket support"
+  lean_config:
+    language: "PHP"
+    code: |
+      $config = [
+          'host' => 'localhost',
+          'dbname' => 'spmp_db',
+          'user' => 'root',
+          'pass' => 'your_password',
+          'features' => [
+              'redis' => false,    # Default off, enable if ram >= 8GB
+              'swoole' => false,   # Default off, enable if cpu > 2GHz
+              'queue' => false     # Default off, enable if user_count > 100
+          ]
+      ];
+  cli_commands:
+    - command: "spmp generate:model [NAME]"
+      purpose: "Creates a model with ORM support (e.g., Note, Item)."
+    - command: "spmp optimize:hardware [CPU] [RAM] [OS] [USERS]"
+      purpose: "Sets config based on specs (e.g., spmp optimize:hardware 1.1GHz 4GB Linux 1)."
+
+folder_structure:
+  - path: "/spmp_project"
+    subdirs:
+      - path: "app/"
+        components:
+          - "controllers/ # Business logic (e.g., HomeController.php)"
+          - "models/ # Database interactions (e.g., BaseModel.php)"
+          - "views/ # UI templates (e.g., layout.php, home.php)"
+      - path: "core/"
+        components:
+          - "Cache.php # Lean caching (file or Redis)"
+          - "DB.php # Database wrapper with PDO"
+          - "Router.php # URL handling (basic or async)"
+          - "Security.php # CSRF/XSS protection"
+          - "Template.php # Templating engine"
+      - path: "public/"
+        components:
+          - "css/ # Styles (e.g., style.css)"
+          - "index.php # Entry point"
+      - path: "vmods/"
+        components:
+          - "ModManager.php # Virtual modifications"
+      - "config.php # Centralized settings"
+      - ".htaccess # Security & routing"
+
+security:
+  - tag: "@CSRF-Protection"
+    method: "Use Security.php’s verifyCsrfToken()"
+    context: "Prevents cross-site request forgery in forms."
+    code:
+      language: "PHP"
+      snippet: |
+        if ($security->verifyCsrfToken($_POST['csrf_token'])) { /* Proceed */ }
+  - tag: "@XSS-Prevention"
+    method: "Use sanitizeInput()"
+    context: "Sanitizes user input to block XSS attacks."
+    code:
+      language: "PHP"
+      snippet: |
+        $cleanInput = $security->sanitizeInput($_POST['input']);
+  - tag: "@SQL-Injection"
+    method: "Use DB.php with prepared statements"
+    context: "Protects database queries from injection."
+    code:
+      language: "PHP"
+      snippet: |
+        $db->query("SELECT * FROM users WHERE id = ?", [$userId]);
+
+crud_examples:
+  - model:
+      name: "UserModel"
+      code:
+        language: "PHP"
+        snippet: |
+          class UserModel extends BaseModel {
+              public function getUserById($id) {
+                  return $this->query("SELECT * FROM users WHERE id = ?", [$id]);
+              }
+              public function createUser($data) {
+                  $this->query("INSERT INTO users (name, email) VALUES (?, ?)", [$data['name'], $data['email']]);
+              }
+          }
+  - controller:
+      name: "UserController"
+      code:
+        language: "PHP"
+        snippet: |
+          class UserController {
+              public function index() {
+                  $model = new UserModel();
+                  $users = $model->getUserById(1);
+                  $template = new Template();
+                  $template->render('users', ['users' => $users]);
+              }
+          }
+  - view:
+      name: "users.php"
+      code:
+        language: "PHP"
+        snippet: |
+          <!-- views/users.php -->
+          <h1>Users</h1>
+          <?php foreach ($users as $user): ?>
+          <p><?php echo $user['name']; ?></p>
+          <?php endforeach; ?>
+
+snippets:
+  - tag: "@CACHE-LEAN"
+    language: "PHP"
+    code: |
+      class Cache {
+          private $redis = null;
+          private $fileDir = '../cache/';
+          public function __construct($config) {
+              if ($config['features']['redis'] && extension_loaded('redis')) {
+                  $this->redis = new Redis();
+                  $this->redis->connect($config['redis']['host'], $config['redis']['port']);
+              }
+          }
+          public function setFile($key, $value) {
+              file_put_contents($this->fileDir . md5($key), serialize($value));
+          }
+          public function setRedis($key, $value) {
+              $this->redis->setex($key, 3600, serialize($value));
+          }
+          public function set($key, $value) {
+              $this->redis ? $this->setRedis($key, $value) : $this->setFile($key, $value);
+          }
+      }
+    purpose: "Lean caching: file-based for low spec, Redis for high spec."
+  - tag: "@ROUTING-LEAN"
+    language: "PHP"
+    code: |
+      class Router {
+          public function route($uri) {
+              [SWOOLE_CHECK]
+              switch ($uri) {
+                  case '/': return (new HomeController())->index();
+              }
+          }
+      }
+    variables:
+      - name: "SWOOLE_CHECK"
+        options:
+          - condition: "swoole = false"
+            code: "// Basic routing"
+          - condition: "swoole = true"
+            code: "Swoole\\Coroutine\\run(function() { /* Async logic */ });"
+
+retrieval_scenarios:
+  error_handling:
+    - query: "What should I do if I get a database connection error?"
+      response: "Check config.php credentials and ensure MySQL is running. DB.php will display the error message."
+    - query: "How do I debug routing issues?"
+      response: "Verify Router.php’s switch cases match your URLs and check .htaccess rewrite rules."
+  best_practices:
+    - query: "How do I optimize SPMP for performance?"
+      response: "Use Cache.php for frequent queries and batchInsert for bulk data."
+    - query: "What are the best security practices in SPMP?"
+      response: "Enable HTTPS, use verifyCsrfToken(), and sanitize all inputs."
+
+api:
+  external_sources:
+    - name: "Google Keep API (mock)"
+      url: "https://api.example.com/keep"
+      purpose: "Sync notes for single-user app."
+    - name: "SAP ERP API"
+      url: "https://api.sap.com/erp"
+      purpose: "Integrate enterprise data."
+
+future_enhancements:
+  - name: "Progressive Web App (PWA) Support"
+    description: "Enable SPMP-RAG to generate Progressive Web Apps with offline capabilities, push notifications, and app-like experiences using service workers and manifests."
+    implementation: "Add PWA.php in core/ to generate manifest.json and service worker scripts in public/."
+    details:
+      - pwa_system:
+          purpose: "Create PWAs for enhanced user experience."
+          example:
+            language: "PHP"
+            code: |
+              class PWA {
+                  public function generateManifest($config) {
+                      $manifest = [
+                          'name' => $config['app_name'],
+                          'start_url' => '/',
+                          'display' => 'standalone',
+                          'background_color' => '#ffffff',
+                          'theme_color' => '#000000'
+                      ];
+                      file_put_contents('public/manifest.json', json_encode($manifest));
+                  }
+                  public function generateServiceWorker() {
+                      $sw = "self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request) || fetch(e.request)); });";
+                      file_put_contents('public/sw.js', $sw);
+                  }
+              }
+    ai_integration: "AI generates PWA assets dynamically (e.g., 'Generate a PWA manifest for a notes app')."
+
+  - name: "Serverless Deployment"
+    description: "Adapt SPMP-RAG for serverless architectures (e.g., AWS Lambda, Google Cloud Functions) to reduce hosting costs and improve scalability."
+    implementation: "Modify Router.php and index.php for serverless entry points; add CLI command spmp deploy:serverless."
+    details:
+      - serverless_system:
+          purpose: "Enable serverless execution of SPMP apps."
+          example:
+            language: "PHP"
+            code: |
+              class ServerlessRouter {
+                  public function handle($event) {
+                      $uri = $event['path'] ?? '/';
+                      switch ($uri) {
+                          case '/': return (new HomeController())->index();
+                          default: return ['statusCode' => 404, 'body' => 'Not Found'];
+                      }
+                  }
+              }
+              // index.php
+              $router = new ServerlessRouter();
+              return $router->handle($_SERVER['aws_lambda_event'] ?? []);
+    ai_integration: "AI generates serverless configs (e.g., 'Deploy this ERP to AWS Lambda')."
+
+  - name: "Microservices Architecture"
+    description: "Break SPMP-RAG into microservices (e.g., separate auth, CRUD, and UI services) for modular deployments."
+    implementation: "Introduce Microservice.php in core/ with service discovery and API gateway support."
+    details:
+      - microservice_system:
+          purpose: "Support modular, distributed app architecture."
+          example:
+            language: "PHP"
+            code: |
+              class Microservice {
+                  private $services = [];
+                  public function register($name, $endpoint) {
+                      $this->services[$name] = $endpoint;
+                  }
+                  public function call($name, $method, $data) {
+                      $ch = curl_init($this->services[$name] . '/' . $method);
+                      curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+                      return json_decode(curl_exec($ch), true);
+                  }
+              }
+    ai_integration: "AI designs microservice splits (e.g., 'Split this CMS into microservices')."
+
+  - name: "AI-Powered Analytics"
+    description: "Integrate real-time analytics for user behavior, app performance, and hardware usage, powered by AI insights."
+    implementation: "Add Analytics.php in core/ with data collection and AI-driven reporting."
+    details:
+      - analytics_system:
+          purpose: "Provide actionable insights from app usage."
+          example:
+            language: "PHP"
+            code: |
+              class Analytics {
+                  private $db;
+                  public function __construct($config) {
+                      $this->db = new DB($config);
+                  }
+                  public function log($event, $data) {
+                      $this->db->query("INSERT INTO analytics (event, data) VALUES (?, ?)", [$event, json_encode($data)]);
+                  }
+                  public function report() {
+                      return $this->db->query("SELECT event, COUNT(*) as count FROM analytics GROUP BY event");
+                  }
+              }
+    ai_integration: "AI generates analytics dashboards (e.g., 'Show usage stats for 1000 users')."
+
+  - name: "Natural Language Processing (NLP) Integration"
+    description: "Enable NLP features like chatbots or voice commands within SPMP-RAG apps."
+    implementation: "Add NLP.php in core/ with a lightweight NLP library or API hooks (e.g., Dialogflow)."
+    details:
+      - nlp_system:
+          purpose: "Add conversational interfaces to apps."
+          example:
+            language: "PHP"
+            code: |
+              class NLP {
+                  private $apiKey;
+                  public function __construct($config) {
+                      $this->apiKey = $config['nlp']['api_key'];
+                  }
+                  public function process($input) {
+                      $ch = curl_init('https://api.dialogflow.com/v1/query');
+                      curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(['query' => $input]));
+                      curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Bearer $this->apiKey"]);
+                      return json_decode(curl_exec($ch), true);
+                  }
+              }
+    ai_integration: "AI builds NLP interfaces (e.g., 'Add a chatbot to this CRM')."
+
+  - name: "Low-Code/No-Code Interface"
+    description: "Provide a visual builder for non-developers to create SPMP-RAG apps via drag-and-drop or form-based inputs."
+    implementation: "Create LowCode.php and a public/lowcode/ UI to translate inputs into SPMP-RAG code."
+    details:
+      - lowcode_system:
+          purpose: "Enable non-technical users to build apps."
+          example:
+            language: "PHP"
+            code: |
+              class LowCode {
+                  public function generate($design) {
+                      $code = "class {$design['name']}Controller { public function index() { return '{$design['content']}'; } }";
+                      file_put_contents("app/controllers/{$design['name']}Controller.php", $code);
+                  }
+              }
+    ai_integration: "AI converts low-code designs to PHP (e.g., 'Generate code from this form layout')."
+
+  - name: "Blockchain Integration"
+    description: "Support blockchain for secure transactions, data integrity, or decentralized apps within SPMP-RAG."
+    implementation: "Add Blockchain.php in core/ with API connectors (e.g., Ethereum)."
+    details:
+      - blockchain_system:
+          purpose: "Enable decentralized features."
+          example:
+            language: "PHP"
+            code: |
+              class Blockchain {
+                  private $apiUrl;
+                  public function __construct($config) {
+                      $this->apiUrl = $config['blockchain']['url'];
+                  }
+                  public function record($data) {
+                      $ch = curl_init("$this->apiUrl/transactions");
+                      curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+                      return curl_exec($ch);
+                  }
+              }
+    ai_integration: "AI generates blockchain logic (e.g., 'Add a transaction ledger to this ERP')."
+
+  - name: "Edge Computing Optimization"
+    description: "Optimize SPMP-RAG for edge devices (e.g., IoT, CDNs) with low-latency processing."
+    implementation: "Enhance Cache.php and Router.php for edge-specific logic; CLI: spmp optimize:edge."
+    details:
+      - edge_system:
+          purpose: "Run SPMP apps efficiently on edge devices."
+          example:
+            language: "PHP"
+            code: |
+              class EdgeCache {
+                  public function set($key, $value) {
+                      file_put_contents("edge_cache/$key", serialize($value));
+                  }
+                  public function get($key) {
+                      return file_exists("edge_cache/$key") ? unserialize(file_get_contents("edge_cache/$key")) : null;
+                  }
+              }
+    ai_integration: "AI tailors edge configs (e.g., 'Optimize this app for an IoT device')."
+
+  - name: "Multi-Language Support (i18n)"
+    description: "Add internationalization for apps to support multiple languages and locales."
+    implementation: "Introduce i18n.php in core/ with language files in app/lang/."
+    details:
+      - i18n_system:
+          purpose: "Support multilingual apps."
+          example:
+            language: "PHP"
+            code: |
+              class I18n {
+                  private $lang;
+                  public function __construct($lang = 'en') {
+                      $this->lang = $lang;
+                  }
+                  public function translate($key) {
+                      $translations = require "app/lang/{$this->lang}.php";
+                      return $translations[$key] ?? $key;
+                  }
+              }
+    ai_integration: "AI generates translation files (e.g., 'Translate this CMS to Spanish')."
+
+  - name: "Automated Testing Framework"
+    description: "Build a testing suite for unit, integration, and performance tests within SPMP-RAG."
+    implementation: "Add Test.php in core/ with PHPUnit integration; CLI: spmp test:run."
+    details:
+      - test_system:
+          purpose: "Ensure app reliability through automated tests."
+          example:
+            language: "PHP"
+            code: |
+              class Test {
+                  public function run($testFile) {
+                      require_once "tests/$testFile.php";
+                      $test = new $testFile();
+                      $test->run();
+                  }
+              }
+              // tests/NoteTest.php
+              class NoteTest extends PHPUnit\Framework\TestCase {
+                  public function testCreate() {
+                      $this->assertTrue(true); // Placeholder
+                  }
+              }
+    ai_integration: "AI writes test cases (e.g., 'Generate tests for this controller')."
+
+  - name: "Containerization Support"
+    description: "Provide native Docker/Kubernetes support for easy deployment and orchestration."
+    implementation: "Include Dockerfile and k8s.yaml templates; CLI: spmp containerize."
+    details:
+      - container_system:
+          purpose: "Simplify deployment with containers."
+          example:
+            language: "Dockerfile"
+            code: |
+              FROM php:8.0-apache
+              COPY . /var/www/html
+              RUN docker-php-ext-install pdo_mysql
+    ai_integration: "AI generates container configs (e.g., 'Dockerize this notes app')."
+
+  - name: "Dynamic Theme Engine"
+    description: "Allow runtime theme switching (e.g., light/dark mode) with customizable UI skins."
+    implementation: "Enhance Template.php with a theme loader; store themes in public/themes/."
+    details:
+      - theme_system:
+          purpose: "Enable flexible UI customization."
+          example:
+            language: "PHP"
+            code: |
+              class Template {
+                  private $theme;
+                  public function setTheme($theme) {
+                      $this->theme = $theme;
+                  }
+                  public function render($file, $data) {
+                      echo "<link rel='stylesheet' href='public/themes/{$this->theme}.css'>";
+                      require_once "app/views/$file.php";
+                  }
+              }
+    ai_integration: "AI designs themes (e.g., 'Create a dark mode theme')."
+
+  - name: "Rate Limiting and Throttling"
+    description: "Protect SPMP-RAG apps from abuse with built-in rate limiting and request throttling."
+    implementation: "Add Throttle.php in core/ with Redis or file-based counters."
+    details:
+      - throttle_system:
+          purpose: "Prevent overuse of app resources."
+          example:
+            language: "PHP"
+            code: |
+              class Throttle {
+                  private $cache;
+                  public function __construct($config) {
+                      $this->cache = new Cache($config);
+                  }
+                  public function limit($key, $maxRequests, $period) {
+                      $count = $this->cache->get($key) ?? 0;
+                      if ($count >= $maxRequests) die("Rate limit exceeded");
+                      $this->cache->set($key, $count + 1, $period);
+                  }
+              }
+    ai_integration: "AI sets throttling rules (e.g., 'Limit this API to 100 requests/min')."
+
+  - name: "Offline-First Data Sync"
+    description: "Enable apps to work offline with automatic data synchronization when online."
+    implementation: "Extend DB.php with a local SQLite fallback and sync logic."
+    details:
+      - offline_system:
+          purpose: "Support offline functionality."
+          example:
+            language: "PHP"
+            code: |
+              class DB {
+                  private $sqlite;
+                  public function __construct($config) {
+                      $this->sqlite = new PDO("sqlite:offline.db");
+                  }
+                  public function queue($sql, $params) {
+                      $this->sqlite->query("INSERT INTO queue (sql, params) VALUES (?, ?)", [$sql, json_encode($params)]);
+                  }
+                  public function sync($onlineDb) {
+                      $queue = $this->sqlite->query("SELECT * FROM queue");
+                      foreach ($queue as $task) {
+                          $onlineDb->query($task['sql'], json_decode($task['params'], true));
+                      }
+                  }
+              }
+    ai_integration: "AI builds sync logic (e.g., 'Add offline sync to this notes app')."
+
+  - name: "Voice Command Interface"
+    description: "Integrate voice recognition for hands-free app control."
+    implementation: "Add Voice.php in core/ with Web Speech API or external service hooks."
+    details:
+      - voice_system:
+          purpose: "Enable voice-driven interactions."
+          example:
+            language: "PHP"
+            code: |
+              class Voice {
+                  public function generateScript() {
+                      return "<script>let recognition = new webkitSpeechRecognition(); recognition.onresult = e => { fetch('/voice', {method: 'POST', body: e.results[0][0].transcript}); };</script>";
+                  }
+              }
+    ai_integration: "AI generates voice commands (e.g., 'Add voice control to this LMS')."
+
+  - name: "AI-Driven Code Refactoring"
+    description: "Use AI to suggest and apply code improvements (e.g., optimize loops, reduce complexity)."
+    implementation: "Add Refactor.php in core/ with AI-driven linting and rewriting."
+    details:
+      - refactor_system:
+          purpose: "Improve code quality automatically."
+          example:
+            language: "PHP"
+            code: |
+              class Refactor {
+                  public function optimize($code) {
+                      // Placeholder: AI replaces foreach with array_map
+                      return str_replace('foreach', 'array_map', $code);
+                  }
+              }
+    ai_integration: "AI refactors code (e.g., 'Optimize this controller for speed')."
+
+  - name: "Cross-Platform Mobile Support"
+    description: "Generate mobile apps (iOS/Android) from SPMP-RAG using frameworks like Capacitor."
+    implementation: "Add Mobile.php in core/ to bundle PHP backend with mobile frontend."
+    details:
+      - mobile_system```yaml
+      mobile_system:
+          purpose: "Extend SPMP to mobile platforms."
+          example:
+            language: "PHP"
+            code: |
+              class Mobile {
+                  public function build($platform) {
+                      // Placeholder: Generate Capacitor config
+                      $config = ['webDir' => 'public', 'platform' => $platform];
+                      file_put_contents('capacitor.config.json', json_encode($config));
+                  }
+              }
+    ai_integration: "AI builds mobile apps (e.g., 'Convert this CMS to a mobile app')."
+
+  - name: "Predictive Caching"
+    description: "Use AI to predict and pre-cache data based on user behavior patterns."
+    implementation: "Enhance Cache.php with predictive logic using usage stats."
+    details:
+      - predictive_system:
+          purpose: "Improve performance with smart caching."
+          example:
+            language: "PHP"
+            code: |
+              class Cache {
+                  public function predict($key, $userId) {
+                      $stats = $this->getUsageStats($userId);
+                      if ($stats['freq'] > 10) $this->set($key, $this->fetch($key));
+                  }
+              }
+    ai_integration: "AI sets caching rules (e.g., 'Pre-cache notes for frequent users')."
+
+  - name: "Zero-Downtime Updates"
+    description: "Enable seamless app updates without interrupting user sessions."
+    implementation: "Add Update.php in core/ with blue-green deployment logic."
+    details:
+      - update_system:
+          purpose: "Ensure continuous availability during updates."
+          example:
+            language: "PHP"
+            code: |
+              class Update {
+                  public function deploy($newVersion) {
+                      // Placeholder: Switch traffic to new instance
+                      shell_exec("deploy.sh $newVersion");
+                  }
+              }
+    ai_integration: "AI manages update scripts (e.g., 'Deploy this update with zero downtime')."
+
+  - name: "Quantum Computing Readiness"
+    description: "Prepare SPMP-RAG for quantum computing environments (future-proofing)."
+    implementation: "Research quantum PHP extensions; add Quantum.php placeholder."
+    details:
+      - quantum_system:
+          purpose: "Future-proof for quantum advancements."
+          example:
+            language: "PHP"
+            code: |
+              class Quantum {
+                  public function optimize($algorithm) {
+                      // Placeholder: Quantum simulation
+                      return "Optimized by quantum placeholder";
+                  }
+              }
+    ai_integration: "AI simulates quantum optimizations (e.g., 'Optimize this algorithm for quantum')."
+
+core_principles:
+  - tag: "@Principle-Simplicity"
+    description: "Minimal learning curve with a focus on rapid prototyping and clean code."
+    example:
+      language: "PHP"
+      code: |
+        class Router {
+            public function route($uri) {
+                switch ($uri) {
+                    case '/': return (new HomeController())->index();
+                }
+            }
+        }
+  - tag: "@Principle-Security"
+    description: "Built-in protections against common vulnerabilities like SQLi, XSS, and CSRF."
+    reference: "See Section 5 for secure coding practices."
+    example:
+      language: "PHP"
+      code: |
+        class Security {
+            public function sanitizeInput($input) {
+                return htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
+            }
+        }
+  - tag: "@Principle-Extendability"
+    description: "Customize functionality without altering core files using vQmod."
+    example:
+      language: "PHP"
+      code: |
+        // vmods/SearchMod.php
+        class SearchMod {
+            public function addSearch($controller) {
+                $controller->search = function($query) {
+                    return $this->db->query("SELECT * FROM notes WHERE title LIKE ?", ["%$query%"]);
+                };
+            }
+        }
+
+recommendations:
+  - name: "Hardware Adaptation"
+    description: "Use hardware_context to tailor features (e.g., file cache for low RAM, Redis for high RAM)."
+  - name: "Cloud Optimization"
+    description: "Leverage cloud_recommendations for cost-effective scaling (e.g., t3.micro for small apps)."
+
+code_examples:
+  - name: "Router.php"
+    code:
+      language: "PHP"
+      snippet: |
+        class Router {
+            public function route($uri) {
+                switch ($uri) {
+                    case '/':
+                        require_once '../app/controllers/HomeController.php';
+                        $controller = new HomeController();
+                        $controller->index();
+                        break;
+                    default:
+                        http_response_code(404);
+                        echo 'Page not found';
+                }
+            }
+        }
+    purpose: "Routes requests to controllers based on URI."
+
+edge_cases:
+  - name: "Low-Spec Device"
+    description: "For devices with <4GB RAM, use file-based caching and disable async features."
+  - name: "High-Concurrency Cloud"
+    description: "For cloud deployments with >1000 users, enable Swoole, Redis, and queues."
