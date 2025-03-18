@@ -1,0 +1,485 @@
+title: "SPMP-RAG: AI-Optimized Standard PHP-MVC-Principles"
+version: "6.2"
+language: "PHP"
+architecture: "MVC"
+core_idea: "AI interprets requirements, generates tailored files/folders, schema, tests, and deployment options; prompter deploys and tests for enhancements."
+features:
+  - "Lightweight"
+  - "Secure"
+  - "Extendable"
+  - "Scalable"
+  - "Adaptive"
+  - "Lean"
+use_cases:
+  - "Notes-Taking"
+  - "CMS"
+  - "LMS"
+  - "CRM"
+  - "ERP"
+  - "HRMS"
+  - "PMS"
+  - "WMS"
+author: "Terrylan Manalansan"
+last_updated: "2025-03-19"
+description: "A lean, adaptive PHP MVC framework where AI generates tailored software based on prompter requirements, optimized for specific hardware and user scale, with configurable features adhering to SOLID, DRY, KISS, YAGNI, IoC, DI, and a new Grounded-Practical principle."
+scalability_note: "Scales from 1 user on 4GB Linux device to 50,000+ users on optimized cloud."
+
+ai_workflow:
+  steps:
+    - step: "Requirement Analysis"
+      description: "AI reads requirements.yml to extract app needs."
+    - step: "Feature Selection"
+      description: "AI applies weights from feature_catalog to select features."
+    - step: "Fine-Tuning"
+      description: "AI prompts prompter if requirements.yml lacks key fields or if weights are borderline (e.g., 45-55)."
+      questions:
+        - "Missing data_sensitivity: Should security features be added?"
+        - "Feature weight near threshold (e.g., CAPTCHA at 45): Include it?"
+    - step: "File and Folder Generation"
+      description: "AI builds the project structure (controllers, models, views, core components, optional vmod, IoC container, authentication) based on selected features, following SOLID, DRY, KISS, and YAGNI."
+    - step: "Schema Generation"
+      description: "AI designs database schema based on use case and selected features (e.g., custom roles for RBAC), including optional authentication fields."
+    - step: "Test Script Generation"
+      description: "AI optionally creates unit and integration tests based on prompter choice, validating selected features and principle compliance."
+    - step: "Deployment Options Generation"
+      description: "AI offers deployment templates (e.g., bash, Docker) based on prompter selection, including initial setup."
+    - step: "Prompter Deployment"
+      description: "Prompter executes the chosen deployment method to set up the system."
+    - step: "Testing and Enhancement"
+      description: "Prompter tests the system; AI refines based on feedback."
+
+installation:
+  requirements:
+    - "PHP 8.0+"
+    - "MySQL/MariaDB 5.7+ or SQLite (auto-selected by AI based on scale)"
+    - "Apache/Nginx"
+  ai_generated_config:
+    description: "AI produces a config.php tailored to hardware, user count, and selected features, adhering to Dependency Injection and Inversion of Control."
+    example:
+      language: "PHP"
+      snippet: |
+        $config = [
+            'host' => 'localhost',
+            'dbname' => 'spmp_db',
+            'user' => 'root',
+            'pass' => 'auto_generated_pass',
+            'features' => [
+                'cache' => 'none',  # Options: none, file, redis (prompter-selected)
+                'async' => false,   # Optional Swoole support (prompter-selected)
+                'rbac' => false,    # Optional Role-Based Access Control
+                'force_password_change' => false,  # Configurable (default off for small apps)
+                'forgot_password' => false  # Optional email-based reset
+            ]
+        ];
+
+folder_structure:
+  description: "AI dynamically generates the project tree based on requirements and selected features, adhering to SOLID/DRY/KISS/YAGNI/IoC/DI."
+  template:
+    - path: "/spmp_project"
+      subdirs:
+        - path: "app/"
+          components:
+            - "controllers/ # AI-generated logic (SRP, DRY), e.g., AuthController if auth enabled"
+            - "models/ # AI-generated ORM with optional RBAC/User models (LSP)"
+            - "views/ # AI-generated templates (KISS), e.g., login views if auth enabled"
+        - path: "core/"
+          components:
+            - "Cache.php # Optional, configured caching (OCP, DRY)"
+            - "DB.php # AI-configured database with optional auth support (DIP/DI)"
+            - "Router.php # AI-configured routing (ISP)"
+            - "Security.php # AI-enabled security based on selected features (SRP)"
+            - "RBAC.php # Optional Role-Based Access Control"
+            - "Container.php # IoC container for dependency management"
+            - "Auth.php # Optional authentication logic"
+        - path: "public/"
+          components:
+            - "index.php # AI-generated entry using IoC"
+        - path: "tests/"
+          components:
+            - "generated_tests.php # Optional AI-created test suite"
+        - path: "vmods/"  # Optional
+          components:
+            - "ModManager.php # Simplified plugin loader for extensions (OCP)"
+        - "config.php # AI-generated settings with feature toggles"
+        - "deploy/ # Optional deployment templates (e.g., deploy.sh, Dockerfile)"
+
+security:
+  description: "AI embeds configurable PHP security features based on use case and prompter selection, following SRP and DRY."
+  features:
+    - tag: "@CSRF-Protection"
+      method: "Optional; AI injects Security.php with CSRF token logic if enabled."
+    - tag: "@XSS-Prevention"
+      method: "Default; AI applies input sanitization across forms."
+    - tag: "@SQL-Injection"
+      method: "Default; AI uses prepared statements and PDO in DB.php."
+    - tag: "@Session-Security"
+      method: "Optional; AI configures secure session handling if auth enabled."
+    - tag: "@Password-Hashing"
+      method: "Default; AI implements password_hash() if auth enabled."
+    - tag: "@File-Upload-Security"
+      method: "Optional; AI enforces checks if file uploads specified."
+    - tag: "@Header-Security"
+      method: "Optional; AI sets HTTP headers if public-facing app."
+    - tag: "@Input-Validation"
+      method: "Default; AI integrates basic validation, customizable."
+    - tag: "@Error-Reporting"
+      method: "Default; AI disables error display in production."
+    - tag: "@Rate-Limiting"
+      method: "Optional; AI adds throttling if high user count specified."
+
+authentication:
+  description: "AI optionally generates login features based on prompter choice, with configurable password change enforcement."
+  features:
+    - tag: "@Login"
+      method: "Optional; AI generates login with session management if enabled."
+      example:
+        language: "PHP"
+        snippet: |
+          class Auth {
+              private $db;
+              public function __construct(DB $db) {
+                  $this->db = $db;
+              }
+              public function login($username, $password) {
+                  $user = $this->db->query("SELECT * FROM users WHERE username = ?", [$username])->fetch();
+                  if ($user && password_verify($password, $user['password'])) {
+                      session_start();
+                      $_SESSION['user_id'] = $user['id'];
+                      if ($user['force_password_change'] && $config['force_password_change']) {
+                          header("Location: /change-password");
+                          exit;
+                      }
+                      return true;
+                  }
+                  return false;
+              }
+          }
+    - tag: "@Force-Password-Change"
+      method: "Configurable; AI enforces password change if enabled in config."
+    - tag: "@Change-Password"
+      method: "Optional; AI provides password change if auth enabled."
+    - tag: "@Forgot-Password"
+      method: "Optional; AI implements token-based reset if email support specified."
+
+rbac:
+  description: "AI optionally implements Role-Based Access Control with custom roles defined by prompter, adhering to LSP."
+  implementation: "AI generates RBAC.php with role checks if enabled, integrated with Security.php and Auth.php."
+
+schema_example:
+  description: "AI generates schema based on use case and selected features, keeping it simple (KISS) and necessary (YAGNI)."
+  example:
+    use_case: "Notes-Taking"
+    sql: |
+      CREATE TABLE users (
+          id INT AUTO_INCREMENT PRIMARY KEY,
+          username VARCHAR(255) UNIQUE,
+          password VARCHAR(255),  # Hashed if auth enabled
+          role_id INT,  # Optional, linked to roles table if RBAC enabled
+          force_password_change TINYINT(1) DEFAULT 0,  # Configurable
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+
+      CREATE TABLE roles (  # Optional if RBAC enabled
+          id INT AUTO_INCREMENT PRIMARY KEY,
+          name VARCHAR(255) UNIQUE,
+          permissions TEXT
+      );
+
+      CREATE TABLE notes (
+          id INT AUTO_INCREMENT PRIMARY KEY,
+          user_id INT,
+          title VARCHAR(255),
+          content TEXT,
+          FOREIGN KEY (user_id) REFERENCES users(id)
+      );
+
+test_example:
+  description: "AI optionally generates test scripts based on prompter choice, focusing on selected features."
+  example:
+    language: "PHP"
+    snippet: |
+      class AuthTest extends PHPUnit\Framework\TestCase {
+          public function testLogin() {
+              $auth = new Auth(new DBMock());
+              $this->assertTrue($auth->login('test', 'pass'));  # Simplified for enabled auth
+          }
+      }
+
+deployment_script_example:
+  description: "AI generates optional deployment templates based on prompter selection."
+  example:
+    language: "Bash"
+    snippet: |
+      #!/bin/bash
+      mkdir -p /var/www/spmp_project
+      cp -r ./* /var/www/spmp_project
+      mysql -u root -p < schema.sql
+      chmod -R 755 /var/www/spmp_project
+
+future_enhancements:
+  - name: "Progressive Web App (PWA) Support"
+    description: "AI optionally generates PWA assets if specified."
+  - name: "Serverless Deployment"
+    description: "AI adapts project for serverless platforms if chosen."
+  - name: "Modular Monolith"
+    description: "AI enhances modularity without full microservices."
+
+feature_catalog:
+  description: "Features with weights determining inclusion based on requirements.yml fields."
+  security:
+    - name: "User Authentication"
+      options: ["No", "Yes"]
+      weights:
+        data_sensitivity: { "Low": 0, "Medium": 50, "High": 100 }
+        user_count: { "1-5": 20, "6-50": 50, "51+": 80 }
+      dependencies: []
+    - name: "Login Page"
+      options: ["No", "Yes"]
+      weights:
+        data_sensitivity: { "Low": 0, "Medium": 40, "High": 90 }
+        user_count: { "1-5": 10, "6-50": 40, "51+": 70 }
+      dependencies: ["User Authentication"]
+    - name: "Logout Button"
+      options: ["No", "Yes"]
+      weights:
+        data_sensitivity: { "Low": 0, "Medium": 30, "High": 80 }
+        user_count: { "1-5": 10, "6-50": 30, "51+": 60 }
+      dependencies: ["User Authentication"]
+    - name: "Auto Logout"
+      options: ["No", "Yes"]
+      weights:
+        data_sensitivity: { "Low": 0, "Medium": 20, "High": 70 }
+        access_context: { "Internal": 30, "Public": 50 }
+      dependencies: ["User Authentication"]
+    - name: "Change Password Options"
+      options: ["None", "Admin-only", "User-initiated"]
+      weights:
+        data_sensitivity: { "Low": 0, "Medium": 40, "High": 90 }
+        user_count: { "1-5": 10, "6-50": 40, "51+": 80 }
+      dependencies: ["User Authentication"]
+    - name: "Forgot Password Options"
+      options: ["None", "Email-based", "Token-based"]
+      weights:
+        data_sensitivity: { "Low": 0, "Medium": 30, "High": 80 }
+        access_context: { "Internal": 20, "Public": 60 }
+      dependencies: ["User Authentication"]
+    - name: "Two Factor Authentication"
+      options: ["None", "SMS", "Authenticator"]
+      weights:
+        data_sensitivity: { "Low": 0, "Medium": 20, "High": 80 }
+        access_context: { "Internal": 30, "Public": 70 }
+      dependencies: ["User Authentication"]
+    - name: "CAPTCHA"
+      options: ["None", "On Login", "On Reset"]
+      weights:
+        access_context: { "Internal": 10, "Public": 90 }
+        user_count: { "1-5": 0, "6-50": 30, "51+": 70 }
+      dependencies: ["User Authentication"]
+    - name: "GDPR Compliance"
+      options: ["No", "Yes"]
+      weights:
+        data_sensitivity: { "Low": 0, "Medium": 40, "High": 80 }
+        access_context: { "Internal": 20, "Public": 60 }
+      dependencies: []
+  deployment:
+    - name: "Cloud Deployment"
+      options: ["No", "Yes"]
+      weights:
+        user_count: { "1-5": 10, "6-50": 40, "51+": 80 }
+        low_spec_support: { "Yes": 20, "No": 60 }
+      dependencies: []
+    - name: "Cloud Cost Estimates"
+      options: ["No", "Yes"]
+      weights:
+        cloud_deployment: { "No": 0, "Yes": 80 }
+      dependencies: ["Cloud Deployment"]
+    - name: "Shared Hosting Deployment"
+      options: ["No", "Yes"]
+      weights:
+        user_count: { "1-5": 40, "6-50": 60, "51+": 20 }
+        low_spec_support: { "Yes": 70, "No": 30 }
+      dependencies: []
+    - name: "Local Server Deployment"
+      options: ["No", "Yes"]
+      weights:
+        user_count: { "1-5": 50, "6-50": 40, "51+": 20 }
+        low_spec_support: { "Yes": 60, "No": 30 }
+      dependencies: []
+    - name: "Low Spec Support"
+      options: ["No", "Yes"]
+      weights:
+        hardware_constraints: { "None": 0, "2GB RAM": 80, "4GB RAM": 60 }
+      dependencies: []
+  functionality:
+    - name: "APIs"
+      options: ["No", "Yes"]
+      weights:
+        system_type: { "CMS": 40, "ERP": 60, "Bookkeeping Management System": 50 }
+        user_count: { "1-5": 20, "6-50": 50, "51+": 70 }
+      dependencies: []
+    - name: "Multiple Languages"
+      options: ["No", "Yes"]
+      weights:
+        user_count: { "1-5": 10, "6-50": 40, "51+": 80 }
+        access_context: { "Internal": 20, "Public": 60 }
+      dependencies: []
+    - name: "Dark Theme"
+      options: ["No", "Yes"]
+      weights:
+        user_count: { "1-5": 20, "6-50": 40, "51+": 60 }
+      dependencies: []
+    - name: "High Concurrency Support"
+      options: ["No", "Yes"]
+      weights:
+        user_count: { "1-5": 10, "6-50": 50, "51+": 90 }
+        max_response_time: { "100": 80, "500": 40, "1000": 20 }
+      dependencies: []
+    - name: "Role Based Access Control"
+      options: ["No", "Yes"]
+      weights:
+        user_count: { "1-5": 10, "6-50": 50, "51+": 90 }
+        data_sensitivity: { "Low": 10, "Medium": 40, "High": 80 }
+      dependencies: ["User Authentication"]
+    - name: "External API Integration"
+      options: ["No", "Yes"]
+      weights:
+        system_type: { "CMS": 50, "ERP": 70, "Bookkeeping Management System": 40 }
+        user_count: { "1-5": 20, "6-50": 50, "51+": 70 }
+      dependencies: []
+    - name: "Responsive Design"
+      options: ["No", "Yes"]
+      weights:
+        user_count: { "1-5": 30, "6-50": 60, "51+": 90 }
+        access_context: { "Internal": 40, "Public": 80 }
+      dependencies: []
+    - name: "Dashboard"
+      options: ["No", "Yes"]
+      weights:
+        system_type: { "CMS": 80, "ERP": 90, "Bookkeeping Management System": 85 }
+        user_count: { "1-5": 20, "6-50": 50, "51+": 80 }
+      dependencies: []
+    - name: "Caching"
+      options: ["None", "File", "Redis"]
+      weights:
+        user_count: { "1-5": 10, "6-50": 50, "51+": 90 }
+        max_response_time: { "100": 80, "500": 50, "1000": 20 }
+      dependencies: []
+    - name: "Existing System Integration"
+      options: ["No", "Yes"]
+      weights:
+        system_type: { "CMS": 40, "ERP": 60, "Bookkeeping Management System": 50 }
+        user_count: { "1-5": 20, "6-50": 40, "51+": 60 }
+      dependencies: []
+  design:
+    - name: "Design Branding"
+      options: ["No", "Yes"]
+      weights:
+        user_count: { "1-5": 20, "6-50": 40, "51+": 60 }
+        access_context: { "Internal": 30, "Public": 70 }
+      dependencies: []
+    - name: "Color Palette"
+      options: ["None", "Custom"]
+      weights:
+        design_branding: { "No": 0, "Yes": 80 }
+      dependencies: ["Design Branding"]
+  performance:
+    - name: "Max Response Time Enforcement"
+      options: ["No", "Yes"]
+      weights:
+        max_response_time: { "100": 90, "500": 60, "1000": 30 }
+      dependencies: []
+    - name: "Hardware Constraints Optimization"
+      options: ["No", "Yes"]
+      weights:
+        hardware_constraints: { "None": 0, "2GB RAM": 90, "4GB RAM": 70 }
+      dependencies: []
+  # Original feature_catalog preserved below
+    - name: "Login"
+      options: ["None", "Basic", "Advanced"]
+      weights:
+        data_sensitivity: { "Low": 0, "Medium": 50, "High": 100 }
+        user_scale: { "1-5": 20, "6-50": 50, "51+": 80 }
+      dependencies: []
+    - name: "2FA"
+      options: ["None", "SMS", "Authenticator"]
+      weights:
+        data_sensitivity: { "Low": 0, "Medium": 20, "High": 80 }
+        access_context: { "Internal": 30, "Public": 70 }
+      dependencies: ["Login"]
+    - name: "CAPTCHA"
+      options: ["None", "On Login", "On Reset"]
+      weights:
+        access_context: { "Internal": 10, "Public": 90 }
+        user_scale: { "1-5": 0, "6-50": 30, "51+": 70 }
+      dependencies: ["Login"]
+    - name: "Caching"
+      options: ["None", "File", "Redis"]
+      weights:
+        user_scale: { "1-5": 10, "6-50": 60, "51+": 90 }
+      dependencies: []
+
+ai_guidelines:
+  description: "Simple rules for AI to apply weights from feature_catalog."
+  rules:
+    - "Calculate total weight for each feature by summing weights from relevant requirement fields (e.g., data_sensitivity, user_scale)."
+    - "Include feature if total weight >= 50; select highest-weighted option if multiple available."
+    - "Respect dependencies (e.g., 2FA requires Login)."
+    # New rules added for full integration
+    - "Calculate total weight for each feature by summing weights from relevant requirement fields (e.g., data_sensitivity, user_count)."
+    - "Include feature if total weight >= 50; select highest-weighted option if multiple available, unless overridden by requirements.yml."
+    - "Respect dependencies (e.g., 2FA requires User Authentication)."
+    - "Use explicit values from requirements.yml to override weight-based decisions when provided (e.g., 'two_factor_authentication: None')."
+    - "For numeric fields like user_count or max_response_time, map to ranges: user_count (1-5, 6-50, 51+), max_response_time (100, 500, 1000)."
+
+core_principles:
+  - tag: "@Principle-Simplicity"
+    description: "AI minimizes complexity by generating only what’s needed (KISS)."
+  - tag: "@Principle-Security"
+    description: "AI ensures secure defaults with configurable enhancements."
+  - tag: "@Principle-Extendability"
+    description: "AI supports extensions via modular design (OCP)."
+  - tag: "@Principle-Lean"
+    description: "AI optimizes resource usage with lightweight code."
+  - tag: "@Principle-Zero-Dependencies"
+    description: "No external packages (e.g., Composer) required—just pure PHP."
+    note: "All core components are self-contained in /core/."
+  - tag: "@Principle-Management-System-Centric"
+    description: "Tailored for building systems like ERP, CRM, and WMS with role-based workflows."
+  - tag: "@Principle-Performance"
+    description: "Lightweight design optimized for low-end systems and fast execution."
+  - tag: "@Principle-Grounded-Practical"
+    description: "AI generates practical, context-aware solutions tailored to prompter needs, avoiding over-engineering."
+    example:
+      language: "PHP"
+      snippet: |
+        class FeatureToggle {
+            public function isEnabled($feature) {
+                return $config['features'][$feature] ?? false;  # Practical opt-in
+            }
+        }
+  - tag: "@SOLID-SRP"
+    description: "Single Responsibility Principle: Each class has one responsibility."
+  - tag: "@SOLID-OCP"
+    description: "Open/Closed Principle: Classes open for extension, closed for modification."
+  - tag: "@SOLID-LSP"
+    description: "Liskov Substitution Principle: Subtypes replaceable without breaking functionality."
+  - tag: "@SOLID-ISP"
+    description: "Interface Segregation Principle: Specific interfaces over bloated ones."
+  - tag: "@SOLID-DIP"
+    description: "Dependency Inversion Principle: High-level modules depend on abstractions."
+  - tag: "@Principle-DRY"
+    description: "Don’t Repeat Yourself: AI ensures code reuse."
+  - tag: "@Principle-KISS"
+    description: "Keep It Simple, Stupid: AI generates straightforward code."
+  - tag: "@Principle-YAGNI"
+    description: "You Ain’t Gonna Need It: AI avoids unnecessary features."
+  - tag: "@Principle-IoC"
+    description: "Inversion of Control: AI manages dependencies via container."
+  - tag: "@Principle-DI"
+    description: "Dependency Injection: AI injects dependencies."
+
+recommendations:
+  - name: "Hardware Optimization"
+    description: "AI tailors features to hardware with prompter input (YAGNI)."
+  - name: "Scale Adaptation"
+    description: "AI adjusts architecture for user count with configurable options (DRY, IoC)."
