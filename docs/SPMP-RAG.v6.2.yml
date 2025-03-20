@@ -477,6 +477,12 @@ core_principles:
     description: "Inversion of Control: AI manages dependencies via container."
   - tag: "@Principle-DI"
     description: "Dependency Injection: AI injects dependencies."
+  - tag: "@Principle-5-Core-Files"
+    description: "AI starts with a minimal foundation of five essential files(public/index.php, core/Router.php, core/Controller.php, core/Model.php, core/Container.php)for routing, MVC, and dependency injection."
+  - tag: "@Principle-1-Class-1-File"
+    description: "AI organizes each class in its own file for clarity, maintainability, and adherence to SRP."
+  - tag: "@Principle-Environment-Readiness"
+    description: "AI ensures the runtime environment is validated (e.g., PHP extensions, database setup) before execution to prevent setup failures."
 
 recommendations:
   - name: "Hardware Optimization"
