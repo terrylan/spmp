@@ -24,6 +24,91 @@ last_updated: "2025-03-19"
 description: "A lean, adaptive PHP MVC framework where AI generates tailored software based on prompter requirements, optimized for specific hardware and user scale, with configurable features adhering to SOLID, DRY, KISS, YAGNI, IoC, DI, and a new Grounded-Practical principle."
 scalability_note: "Scales from 1 user on 4GB Linux device to 50,000+ users on optimized cloud."
 
+
+doctrines:
+  - tag: "@Doctrine-Simplicity"
+    description: "Minimize complexity by generating only what’s needed."
+  - tag: "@Doctrine-Security"
+    description: "Ensure secure defaults with configurable enhancements."
+  - tag: "@Doctrine-Extendability"
+    description: "Support extensions via modular design."
+  - tag: "@Doctrine-Lean"
+    description: "Optimize resource usage with lightweight code."
+  - tag: "@Doctrine-Zero-Dependencies"
+    description: "No external packages—just pure PHP."
+    note: "All core components self-contained in /core/."
+  - tag: "@Doctrine-Management-System-Centric"
+    description: "Tailored for systems like ERP, CRM, WMS with role-based workflows."
+  - tag: "@Doctrine-Performance"
+    description: "Lightweight design optimized for low-end systems and fast execution."
+  - tag: "@Doctrine-Grounded-Practical"
+    description: "Generate practical, context-aware solutions tailored to prompter needs, avoiding over-engineering."
+    example:
+      language: "PHP"
+      snippet: |
+        class FeatureToggle {
+            public function isEnabled($feature) {
+                return $config['features'][$feature] ?? false;
+            }
+        }
+  - tag: "@Doctrine-Database-Flexibility"
+    description: "Support seamless switching between lightweight (SQLite) and robust (MariaDB) databases to match prompter expertise and project needs."
+  - tag: "@Doctrine-Incremental-Testable-Growth"
+    description: "Build systems by creating the tree, listing files, and adding them in testable increments—core first, then critical batches—ensuring functionality toward the full vision."
+    example:
+      steps:
+        - "Core: index.php, Router.php, Controller.php, Model.php, Container.php"
+        - "Batch 1: LedgerModel.php, LedgerController.php"
+        - "Batch 2: Auth.php, UserModel.php"
+
+principles:
+  - tag: "@Principle-Synchronized-Collaboration"
+    description: "AI (coder) executes under prompter (PM) direction, aligning via verify state, target changes, ground updates."
+    example:
+      language: "PHP"
+      snippet: |
+        class TaskController extends Controller {
+            public function add($pmInput) {
+                $this->model->addTask($pmInput['title'], $pmInput['notes']);
+            }
+        }
+  - tag: "@Principle-Align-Target-Ground"
+    description: "Align via state verification, target specific changes, ground in existing code for modular feature injection."
+  - tag: "@Principle-5-Core-Files"
+    description: "Start with five essential files (public/index.php, core/Router.php, core/Controller.php, core/Model.php, core/Container.php) for routing, MVC, and dependency injection."
+  - tag: "@Principle-1-Class-1-File"
+    description: "Organize each class in its own file for clarity, maintainability, and adherence to SRP."
+  - tag: "@Principle-Environment-Readiness"
+    description: "Ensure the runtime environment is validated (e.g., PHP extensions, database setup) before execution to prevent setup failures."
+  - tag: "@Principle-DB-Setup-First"
+    description: "Initialize database schema before app execution to avoid runtime errors."
+  - tag: "@SOLID-SRP"
+    description: "Single Responsibility Principle: Each class has one responsibility."
+  - tag: "@SOLID-OCP"
+    description: "Open/Closed Principle: Classes open for extension, closed for modification."
+  - tag: "@SOLID-LSP"
+    description: "Liskov Substitution Principle: Subtypes replaceable without breaking functionality."
+  - tag: "@SOLID-ISP"
+    description: "Interface Segregation Principle: Specific interfaces over bloated ones."
+  - tag: "@SOLID-DIP"
+    description: "Dependency Inversion Principle: High-level modules depend on abstractions."
+  - tag: "@Principle-DRY"
+    description: "Don’t Repeat Yourself: Ensure code reuse."
+  - tag: "@Principle-KISS"
+    description: "Keep It Simple, Stupid: Generate straightforward code."
+  - tag: "@Principle-YAGNI"
+    description: "You Ain’t Gonna Need It: Avoid unnecessary features."
+  - tag: "@Principle-IoC"
+    description: "Inversion of Control: Manage dependencies via container."
+  - tag: "@Principle-DI"
+    description: "Dependency Injection: Inject dependencies."
+  - tag: "@Principle-Sprint-Feature-Clustering"
+    description: "Group complementary features into single sprints for efficiency and synergy, balancing complexity and testability."
+    example:
+      sprint: "Sprint 7"
+      features: "Priority Levels + Categories/Tags"
+      files: "TaskModel.php, task_form.php, tasks.php, TaskController.php, styles.css"
+
 ai_workflow:
   steps:
     - step: "Requirement Analysis"
@@ -47,6 +132,30 @@ ai_workflow:
       description: "Prompter executes the chosen deployment method to set up the system."
     - step: "Testing and Enhancement"
       description: "Prompter tests the system; AI refines based on feedback."
+
+ai_and_prompter_workflow:
+  description: "Collaborative process between AI (coder) and prompter (PM) for building SPMP-RAG projects."
+  steps:
+    - step: "Design Full Folder Tree"
+      description: "AI designs the complete folder and file tree based on prompter’s requirements and specifications."
+      owner: "AI"
+    - step: "Build Placeholder Structure"
+      description: "Prompter creates the folder tree and placeholder files as a starting scaffold."
+      owner: "Prompter"
+    - step: "Map Tasks by Viability"
+      description: "AI lists files in order of feature importance and testing viability for incremental development."
+      owner: "AI"
+      substeps:
+        - "Start with 5 core files (public/index.php, core/Router.php, core/Controller.php, core/Model.php, core/Container.php) for a testable base."
+        - "Add the next critical file or minimal batch testable with the core (e.g., Auth.php for authentication)."
+        - "Include placeholder files for minor dependencies if needed."
+        - "Iterate, adding files/batches incrementally, ensuring each step is testable and aligns with the final vision."
+    - step: "Code and Test Increment"
+      description: "Prompter codes the file or batch, tests functionality, and verifies it meets expectations."
+      owner: "Prompter"
+    - step: "Iterate or Proceed"
+      description: "If satisfied, prompter requests the next file/batch from AI. If not, iterate with AI to refine the current increment."
+      owner: "Prompter + AI"
 
 installation:
   requirements:
@@ -419,70 +528,27 @@ feature_catalog:
       dependencies: []
 
 ai_guidelines:
-  description: "Simple rules for AI to apply weights from feature_catalog."
+  description: "Rules for AI to generate code and manage features in SPMP-RAG projects."
   rules:
-    - "Calculate total weight for each feature by summing weights from relevant requirement fields (e.g., data_sensitivity, user_scale)."
-    - "Include feature if total weight >= 50; select highest-weighted option if multiple available."
-    - "Respect dependencies (e.g., 2FA requires Login)."
-    # New rules added for full integration
-    - "Calculate total weight for each feature by summing weights from relevant requirement fields (e.g., data_sensitivity, user_count)."
-    - "Include feature if total weight >= 50; select highest-weighted option if multiple available, unless overridden by requirements.yml."
-    - "Respect dependencies (e.g., 2FA requires User Authentication)."
-    - "Use explicit values from requirements.yml to override weight-based decisions when provided (e.g., 'two_factor_authentication: None')."
-    - "For numeric fields like user_count or max_response_time, map to ranges: user_count (1-5, 6-50, 51+), max_response_time (100, 500, 1000)."
-
-core_principles:
-  - tag: "@Principle-Simplicity"
-    description: "AI minimizes complexity by generating only what’s needed (KISS)."
-  - tag: "@Principle-Security"
-    description: "AI ensures secure defaults with configurable enhancements."
-  - tag: "@Principle-Extendability"
-    description: "AI supports extensions via modular design (OCP)."
-  - tag: "@Principle-Lean"
-    description: "AI optimizes resource usage with lightweight code."
-  - tag: "@Principle-Zero-Dependencies"
-    description: "No external packages (e.g., Composer) required—just pure PHP."
-    note: "All core components are self-contained in /core/."
-  - tag: "@Principle-Management-System-Centric"
-    description: "Tailored for building systems like ERP, CRM, and WMS with role-based workflows."
-  - tag: "@Principle-Performance"
-    description: "Lightweight design optimized for low-end systems and fast execution."
-  - tag: "@Principle-Grounded-Practical"
-    description: "AI generates practical, context-aware solutions tailored to prompter needs, avoiding over-engineering."
-    example:
-      language: "PHP"
-      snippet: |
-        class FeatureToggle {
-            public function isEnabled($feature) {
-                return $config['features'][$feature] ?? false;  # Practical opt-in
-            }
-        }
-  - tag: "@SOLID-SRP"
-    description: "Single Responsibility Principle: Each class has one responsibility."
-  - tag: "@SOLID-OCP"
-    description: "Open/Closed Principle: Classes open for extension, closed for modification."
-  - tag: "@SOLID-LSP"
-    description: "Liskov Substitution Principle: Subtypes replaceable without breaking functionality."
-  - tag: "@SOLID-ISP"
-    description: "Interface Segregation Principle: Specific interfaces over bloated ones."
-  - tag: "@SOLID-DIP"
-    description: "Dependency Inversion Principle: High-level modules depend on abstractions."
-  - tag: "@Principle-DRY"
-    description: "Don’t Repeat Yourself: AI ensures code reuse."
-  - tag: "@Principle-KISS"
-    description: "Keep It Simple, Stupid: AI generates straightforward code."
-  - tag: "@Principle-YAGNI"
-    description: "You Ain’t Gonna Need It: AI avoids unnecessary features."
-  - tag: "@Principle-IoC"
-    description: "Inversion of Control: AI manages dependencies via container."
-  - tag: "@Principle-DI"
-    description: "Dependency Injection: AI injects dependencies."
-  - tag: "@Principle-5-Core-Files"
-    description: "AI starts with a minimal foundation of five essential files(public/index.php, core/Router.php, core/Controller.php, core/Model.php, core/Container.php)for routing, MVC, and dependency injection."
-  - tag: "@Principle-1-Class-1-File"
-    description: "AI organizes each class in its own file for clarity, maintainability, and adherence to SRP."
-  - tag: "@Principle-Environment-Readiness"
-    description: "AI ensures the runtime environment is validated (e.g., PHP extensions, database setup) before execution to prevent setup failures."
+    - "Use tools (e.g., X analysis, web search) only when explicitly requested by prompter."
+    - "Leverage continuously updated knowledge—no strict cutoff."
+    - "For feature selection from feature_catalog:"
+      subrules:
+        - "Calculate total weight for each feature by summing relevant requirement fields (e.g., data_sensitivity, user_count) in requirements.yml."
+        - "Include feature if total weight >= 50; choose highest-weighted option if multiple exist."
+        - "Respect dependencies (e.g., 2FA requires User Authentication)."
+        - "Override weight-based decisions with explicit values from requirements.yml (e.g., 'two_factor_authentication: None')."
+        - "Map numeric fields to ranges: user_count (1-5: low, 6-50: medium, 51+: high), max_response_time (100ms: fast, 500ms: medium, 1000ms: slow)."
+    - "For large projects (e.g., Guardian Ledger), follow Incremental-Testable-Growth:"
+      steps:
+        - "Create the full folder tree upfront to define project scope."
+        - "List all files to be created, mapping the complete structure."
+        - "Arrange files by testing viability:"
+          substeps:
+            - "Start with 5 core files (public/index.php, core/Router.php, core/Controller.php, core/Model.php, core/Container.php) for a testable base."
+            - "Add the next critical file or minimal batch testable with the core (e.g., authentication or ledger logic)."
+            - "Iterate, adding files/batches incrementally, testing at each step until complete."
+        - "Ensure each increment is functional, aligning with the final vision."
 
 recommendations:
   - name: "Hardware Optimization"
