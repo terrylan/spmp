@@ -20,7 +20,7 @@ use_cases:
   - "PMS"
   - "WMS"
 author: "Terrylan Manalansan"
-last_updated: "2025-03-19"
+last_updated: "2025-03-21"
 description: "A lean, adaptive PHP MVC framework where AI generates tailored software based on prompter requirements, optimized for specific hardware and user scale, with configurable features adhering to SOLID, DRY, KISS, YAGNI, IoC, DI, and a new Grounded-Practical principle."
 scalability_note: "Scales from 1 user on 4GB Linux device to 50,000+ users on optimized cloud."
 
