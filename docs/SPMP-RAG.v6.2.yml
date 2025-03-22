@@ -1,4 +1,4 @@
-title: "SPMP-RAG: Standard PHP-MVC-Principles"
+title: "SPMP-RAG: AI-Optimized Standard PHP-MVC-Principles"
 version: "6.2"
 language: "PHP"
 architecture: "MVC"
@@ -20,7 +20,7 @@ use_cases:
   - "PMS"
   - "WMS"
 author: "Terrylan Manalansan"
-last_updated: "2025-03-21"
+last_updated: "2025-03-19"
 description: "A lean, adaptive PHP MVC framework where AI generates tailored software based on prompter requirements, optimized for specific hardware and user scale, with configurable features adhering to SOLID, DRY, KISS, YAGNI, IoC, DI, and a new Grounded-Practical principle."
 scalability_note: "Scales from 1 user on 4GB Linux device to 50,000+ users on optimized cloud."
 
@@ -108,6 +108,96 @@ principles:
       sprint: "Sprint 7"
       features: "Priority Levels + Categories/Tags"
       files: "TaskModel.php, task_form.php, tasks.php, TaskController.php, styles.css"
+
+features:
+  - tag: "@Feature-Task-Assignment"
+    description: "Enables assigning tasks to users, with role-based access to user management and visibility of assigned tasks for assignees."
+    example:
+      file: "controllers/TaskController.php, models/TaskModel.php"
+      usage: "Admin assigns task to a user, visible in task list for both creator and assignee."
+    benefits:
+      - "Facilitates collaboration across users."
+      - "Supports role-based workflows."
+  - tag: "@Feature-View-Inheritance"
+    description: "Centralizes common HTML elements (e.g., header with username, navigation) into a single layout file, inherited by all views to reduce duplication and streamline updates."
+    example:
+      file: "core/View.php"
+      usage: "Wraps view files with a shared header/footer containing user login info."
+    benefits:
+      - "Reduces repetitive HTML across views."
+      - "Enables single-point updates for UI elements."
+  - tag: "@Feature-Due-Dates-and-Reminders"
+    description: "Adds due dates to tasks, with visual indicators for overdue tasks; reminders limited to UI where async processing is unavailable."
+    example:
+      file: "models/TaskModel.php, views/tasks.php"
+      usage: "Task due on a specific date turns red if overdue and status isn’t complete."
+    benefits:
+      - "Improves time management for users."
+      - "Adapts to low-spec environments."
+  - tag: "@Feature-Dashboard-Overview"
+    description: "Provides a summary view of tasks (e.g., counts by status) for quick user insight."
+    example:
+      file: "views/dashboard.php, controllers/DashboardController.php"
+      usage: "Shows counts of pending and completed tasks on a dashboard."
+    benefits:
+      - "Enhances visibility of task statuses."
+      - "Offers quick insight without detailed filtering."
+  - tag: "@Feature-Search-and-Filter"
+    description: "Allows searching tasks by title and filtering by status, assignee, or other fields."
+    example:
+      file: "models/TaskModel.php, views/tasks.php"
+      usage: "Search by keyword or filter by assignee."
+    benefits:
+      - "Speeds up task navigation."
+      - "Improves usability with dynamic queries."
+  - tag: "@Feature-Task-Categories-Tags"
+    description: "Adds categorization or tagging to tasks for better organization."
+    example:
+      file: "models/TaskModel.php, views/task_form.php"
+      usage: "Tag task with a category, filter by tag."
+    benefits:
+      - "Enables flexible task grouping."
+      - "Supports custom organization schemes."
+  - tag: "@Feature-Priority-Levels"
+    description: "Assigns priority levels to tasks, with visual cues for emphasis."
+    example:
+      file: "models/TaskModel.php, views/tasks.php"
+      usage: "High-priority task highlighted in list."
+    benefits:
+      - "Highlights critical tasks."
+      - "Enhances task prioritization."
+  - tag: "@Feature-Progress-Tracking"
+    description: "Tracks task completion progress with a visual indicator."
+    example:
+      file: "models/TaskModel.php, views/tasks.php"
+      usage: "Task at 50% completion shows progress bar."
+    benefits:
+      - "Provides granular status tracking."
+      - "Visualizes task advancement."
+  - tag: "@Feature-Attachments"
+    description: "Allows uploading files to tasks, stored locally."
+    example:
+      file: "models/AttachmentModel.php, controllers/AttachmentController.php"
+      usage: "Attach a file to a task, viewable in task details."
+    benefits:
+      - "Enriches task context with supporting files."
+      - "Supports documentation needs."
+  - tag: "@Feature-Recurring-Tasks"
+    description: "Enables tasks to repeat on a schedule with auto-generation on completion."
+    example:
+      file: "models/TaskModel.php, core/Recurrence.php"
+      usage: "Daily task auto-creates next instance upon completion."
+    benefits:
+      - "Automates repetitive tasks."
+      - "Reduces manual task recreation."
+  - tag: "@Feature-Settings-Panel"
+    description: "Provides an admin-only interface to configure system-wide settings, such as toggling features, setting defaults, or managing global preferences."
+    example:
+      file: "controllers/SettingsController.php, views/settings.php"
+      usage: "Admin toggles a feature flag or sets a default value from a centralized panel."
+    benefits:
+      - "Centralizes system configuration for admins."
+      - "Enhances flexibility without code changes."
 
 ai_workflow:
   steps:
