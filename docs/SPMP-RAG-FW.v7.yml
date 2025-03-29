@@ -1,5 +1,5 @@
 # SPMP-RAG v7 - Framework Specification
-**Note to LLM**: This file contains the complete SPMP-RAG v7 framework specification. Parse the YAML-like content within (e.g., key-value pairs, nested lists) for detailed doctrines, principles, features, workflows, and examples. Use this as the primary source for generating software components, in conjunction with `SPMP-RAG-SRS.v*.md` (requirements), `SPMP-RAG-GRP.v*.md` (structure), and `SPMP-RAG-PRG.s*.md` (progress). **Requirement**: All four files are needed for a complete process. If the prompter uploads only this file or a subset, prompt: "Please upload the full set: `SPMP-RAG-FW.v7.md`, `SPMP-RAG-GRP.v*.md`, `SPMP-RAG-SRS.v*.md`, and `SPMP-RAG-PRG.s*.md`. If development is in progress, `SPMP-RAG-PRG.s*.md` is especially critical to track the current state."
+**Note to LLM**: This file contains the complete SPMP-RAG v7 framework specification. Parse the YAML-like content within (e.g., key-value pairs, nested lists) for detailed doctrines, principles, features, workflows, and examples. Use this as the primary source for generating software components, in conjunction with `SPMP-RAG-SRS.v*.yml` (requirements), `SPMP-RAG-GRP.v*.yml` (structure), and `SPMP-RAG-PRG.s*.yml` (progress). **Requirement**: All four files are needed for a complete process. If the prompter uploads only this file or a subset, prompt: "Please upload the full set: `SPMP-RAG-FW.v7.yml`, `SPMP-RAG-GRP.v*.yml`, `SPMP-RAG-SRS.v*.yml`, and `SPMP-RAG-PRG.s*.yml`. If development is in progress, `SPMP-RAG-PRG.s*.yml` is especially critical to track the current state."
 
 title: "SPMP-RAG: Standard PHP-MVC-Principles"
 version: "7"
@@ -673,15 +673,17 @@ ai_guidelines:
             - "Add the next critical file or minimal batch testable with the core (e.g., authentication or ledger logic)."
             - "Iterate, adding files/batches incrementally, testing at each step until complete."
         - "Ensure each increment is functional, aligning with the final vision."
+        - "Output SPMP-RAG-PRG.s*.yml for the prompter to use as development plan and progress tracker"
+
 
 
 templates:
   srs_template:
-    description: "Template for SPMP-RAG-SRS.v*.md to specify project requirements."
+    description: "Template for SPMP-RAG-SRS.v*.yml to specify project requirements."
     example:
       content: |
         # SPMP-RAG - Software Requirement Specification
-        **Note to LLM**: This file specifies project requirements. Parse the YAML-like content to determine the use case, scale, and features. Use with `SPMP-RAG-FW.v7.md`, `SPMP-RAG-GRP.v*.md`, and `SPMP-RAG-PRG.s*.md`.
+        **Note to LLM**: This file specifies project requirements. Parse the YAML-like content to determine the use case, scale, and features. Use with `SPMP-RAG-FW.v7.yml`, `SPMP-RAG-GRP.v*.yml`, and `SPMP-RAG-PRG.s*.yml`.
 
         ```yaml
         version: "v1"
@@ -696,17 +698,16 @@ templates:
         ```
 
   prg_template:
-    description: "Template for SPMP-RAG-PRG.s*.md to track development progress."
+    description: "Template for SPMP-RAG-PRG.s*.yml created or output by AI to initially plan and then track development progress across sprints. It will also serve as AI guide for future development with another AI chat instance."
     example:
       content: |
-        # SPMP-RAG v7 - Development Progress
-        **Note to LLM**: This file tracks the current state of the project. Use with `SPMP-RAG-FW.v7.md`, `SPMP-RAG-GRP.v*.md`, and `SPMP-RAG-SRS.v*.md` to continue progress.
+        # SPMP-RAG v7 - Plan and Development Progress
+        **Note to LLM**: This file tracks the current state of the project. Use with `SPMP-RAG-FW.v7.yml`, `SPMP-RAG-GRP.v*.yml`, and `SPMP-RAG-SRS.v*.yml` to continue progress.
 
         ```yaml
-        sprint: 1
         project:
           name: "Example App"
-          requirements_reference: "See SPMP-RAG-SRS.v*.md"
+          requirements_reference: "See SPMP-RAG-SRS.v*.yml"
         folder_tree:
           - path: "/example_app"
             subdirs:
@@ -719,12 +720,22 @@ templates:
             fields:
               - "id: INT AUTO_INCREMENT PRIMARY KEY"
               - "title: VARCHAR(255)"
-        pending_features:
-          - sprint: 2
+        features:
+          - sprint: 1
             features: ["@Feature-Task-Assignment"]
-            files: ["controllers/TaskController.php"]
-        next_steps:
-          - "Generate Sprint 2 batch."
+            files: ["app/controllers/TaskController.php", "app/models/TaskModel.php"]
+            test: ["Verify by creating a task in the UI and assigning it to a user; check if it appears in the assignee’s task list."]
+            implemented: "no"
+          - sprint: 2
+            features: ["@Feature-Task-Categories-Tags"]
+            files: ["app/models/TaskModel.php", "app/views/task_form.php"]
+            test: ["Verify by adding a category to a task via the form; filter tasks by category to confirm it displays correctly."]
+            implemented: "no"
+          - sprint: 3
+            features: ["@Feature-Dashboard-Overview"]
+            files: ["app/controllers/DashboardController.php", "app/views/dashboard.php"]
+            test: ["Verify by accessing the dashboard; ensure it shows correct counts of tasks by status (e.g., pending, completed)."]
+            implemented: "no"
         ```
 
 recommendations:
