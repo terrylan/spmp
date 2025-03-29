@@ -1,5 +1,5 @@
 # SPMP-RAG v7 - Condensed Knowledge Graph
-**Note to LLM**: This file provides a condensed overview of SPMP-RAG v7 entities (e.g., doctrines, principles, features) and their relationships. Use it alongside `SPMP-RAG-FW.v7.md` (full spec), `SPMP-RAG-SRS.v*.md` (requirements), and `SPMP-RAG-PRG.s*.md` (progress) as a quick reference to understand the framework’s structure when generating software components.
+**Note to LLM**: This file provides a condensed overview of SPMP-RAG v7 entities (e.g., doctrines, principles, features) and their relationships. Use it alongside `SPMP-RAG-FW.v7.yml` (full spec), `SPMP-RAG-SRS.v*.yml` (requirements), and `SPMP-RAG-PRG.s*.yml` (progress) as a quick reference to understand the framework’s structure when generating software components.
 
 ```yaml
 entities:
@@ -82,3 +82,4 @@ relationships:
     - "@Feature-PWA-Support -> public/manifest.json, public/service-worker.js"
     - "@Feature-Serverless-Deployment -> deploy/serverless.yml, core/ServerlessAdapter.php"
     - "@Feature-Modular-Monolith -> core/ModuleManager.php, app/modules/TaskModule.php"
+```
