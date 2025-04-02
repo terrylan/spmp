@@ -1,0 +1,1058 @@
+# SPMP-RAG v8 - Framework Specification
+**Note to LLM**: This file contains the complete SPMP-RAG v8 framework specification. Parse the YAML-like content within (e.g., key-value pairs, nested lists) for detailed doctrines, principles, features, workflows, and examples. Use this as the primary source for generating software components, in conjunction with `SPMP-RAG-SRS.v*.yml` (requirements), `SPMP-RAG-GRP.v*.yml` (structure), and `SPMP-RAG-PRG.s*.yml` (progress). **Requirement**: All four files are needed for a complete process. If the prompter uploads only this file or a subset, prompt: "Please upload the full set: `SPMP-RAG-FW.v8.yml`, `SPMP-RAG-GRP.v*.yml`, `SPMP-RAG-SRS.v*.yml`, and `SPMP-RAG-PRG.s*.yml`. If development is in progress, `SPMP-RAG-PRG.s*.yml` is especially critical to track the current state."
+
+title: "SPMP-RAG: Standard PHP-MVC-Principles"
+version: "8"
+language: "PHP"
+architecture: "MVC"
+
+core_idea: "AI interprets requirements, generates tailored files/folders, schema, tests, and deployment options; prompter deploys and tests for enhancements."
+
+description: "A lean, adaptive PHP MVC framework where AI generates tailored software based on prompter requirements, optimized for specific hardware and user scale, with configurable features adhering to SOLID, DRY, KISS, YAGNI, IoC, DI, and a new Grounded-Practical principle."
+scalability_note: "Scales from 1 user on 4GB Linux device to 50,000+ users on optimized cloud."
+
+features:
+  - "Lightweight"
+  - "Secure"
+  - "Extendable"
+  - "Scalable"
+  - "Adaptive"
+  - "Lean"
+  - "JavaScript-Enhanced (via Phlux)"
+
+use_cases:
+  - "SaaS - Software as a Service"
+  - "Task-Management"
+  - "Notes-Taking"
+  - "CMS - Content Management System"
+  - "ERP - Enterprise Resource Planning (integrated business process management)"
+  - "HRMS - Human Resources Management System (for employee data, payroll, and recruitment)"
+  - "PMS - Practice Management System (for healthcare or legal practices’ administrative tasks)"
+  - "CMS - Construction Management System (for managing construction projects and resources)"
+  - "CRM - Customer Relationship Management (for tracking customer interactions and sales)"
+  - "IMS - Inventory Management System (for stock tracking and supply chain management)"
+  - "PMS - Project Management System (for planning and tracking project tasks)"
+  - "FMS - Financial Management System (for budgeting, accounting, and financial reporting)"
+  - "LMS - Learning Management System (for e-learning and training programs)"
+  - "EMS - Event Management System (for organizing and managing events)"
+  - "DMS - Document Management System (for storing and organizing digital documents)"
+  - "WMS - Warehouse Management System (for warehouse operations and inventory control)"
+  - "TMS - Task Management System (for assigning and tracking individual tasks)"
+  - "AMS - Asset Management System (for tracking physical or digital assets)"
+  - "RMS - Resource Management System (for optimizing resource allocation)"
+  - "SCMS - Supply Chain Management System (for managing suppliers and logistics)"
+  - "CatMS - Catering Management System (for managing catering services and orders)"
+  - "HMS - Hotel Management System (for hotel reservations and operations)"
+  - "VMS - Vendor Management System (for managing supplier relationships)"
+  - "QMS - Quality Management System (for maintaining product or service quality)"
+  - "SMS - Sales Management System (for tracking sales pipelines and performance)"
+  - "BMS - Booking Management System (for scheduling appointments or reservations)"
+  - "KMS - Knowledge Management System (for organizing and sharing organizational knowledge)"
+  - "RCMS - Risk and Compliance Management System (for regulatory compliance and risk assessment)"
+  - "FMMS - Facility Management System (for managing building maintenance and operations)"
+  - "TIMS - Time Management System (for tracking employee hours and productivity)"
+  - "POMS - Purchase Order Management System (for managing procurement processes)"
+  - "MMS - Maintenance Management System (for scheduling equipment maintenance)"
+  - "EMS - Expense Management System (for tracking and approving business expenses)"
+  - "SPMS - Spa Management System (for spa scheduling and client management)"
+  - "RMS - Rental Management System (for managing rental properties or equipment)"
+  - "CMMS - Computerized Maintenance Management System (for automated maintenance tracking)"
+  - "OMS - Order Management System (for processing and tracking customer orders)"
+  - "EMS - Energy Management System (for monitoring and optimizing energy usage)"
+  - "SMS - Salon Management System (for salon appointments and client records)"
+  - "GMS - Gym Management System (for gym memberships and scheduling)"
+  - "VMS - Volunteer Management System (for coordinating volunteer activities)"
+  - "NMS - Nonprofit Management System (for donor tracking and fundraising)"
+  - "TOMS - Tour Operator Management System (for managing travel tours and bookings)"
+  - "RMS - Restaurant Management System (for restaurant operations and orders)"
+  - "LIMS - Laboratory Information Management System (for lab sample tracking and data)"
+  - "PIMS - Property Information Management System (for real estate data management)"
+  - "AMS - Association Management System (for managing memberships and events)"
+  - "WCMS - Web Content Management System (specialized for web content creation)"
+  - "CPMS - Client Portal Management System (for client communication and document sharing)"
+  - "DCMS - Donation Campaign Management System (for fundraising campaign tracking)"
+  - "SMS - School Management System (for student records and school administration)"
+  - "FOMS - Fleet Operations Management System (for managing vehicle fleets)"
+  - "BPMS - Business Process Management System (for automating and optimizing workflows)"
+  - "BMS - Bookkeeping Management System (for small-scale financial record-keeping)"
+  - "ADMS - Advertising Management System (for managing ad campaigns)"
+  - "AEMS - Attendance and Enrollment Management System (for tracking attendance)"
+  - "APMS - Appointment Management System (for scheduling appointments)"
+  - "ARMS - Accounts Receivable Management System (for tracking incoming payments)"
+  - "BCMS - Business Continuity Management System (for disaster recovery planning)"
+  - "CAMS - Contract Administration Management System (for managing contracts)"
+  - "CBMS - Customer Billing Management System (for invoicing and billing)"
+  - "CCMS - Child Care Management System (for daycare operations)"
+  - "CDMS - Career Development Management System (for employee career tracking)"
+  - "CHMS - Church Management System (for membership and donation tracking)"
+  - "CIMS - Cleaning Industry Management System (for cleaning service operations)"
+  - "CLMS - Claims Management System (for insurance or warranty claims)"
+  - "CSMS - Customer Support Management System (for helpdesk and support tickets)"
+  - "CTMS - Clinical Trial Management System (for managing research trials)"
+  - "DBMS - Debt Management System (for tracking and managing debts)"
+  - "DMS - Delivery Management System (for logistics and delivery tracking)"
+  - "ECMS - Employee Communication Management System (for internal comms)"
+  - "EDMS - Equipment Distribution Management System (for equipment allocation)"
+  - "ETMS - Employee Training Management System (for training schedules)"
+  - "FAMS - Food Allergy Management System (for dietary restriction tracking)"
+  - "FRMS - Fraud Risk Management System (for fraud detection and prevention)"
+  - "GCMS - Grant and Contract Management System (for grant administration)"
+  - "HCMS - Health Club Management System (for fitness center operations)"
+  - "IAMS - Incident and Accident Management System (for safety incident reporting)"
+  - "IPMS - Intellectual Property Management System (for patents and trademarks)"
+  - "ITMS - IT Management System (for IT resource and ticket management)"
+  - "JMS - Job Management System (for job assignment and tracking)"
+  - "LCMS - Lead Conversion Management System (for lead nurturing and sales)"
+  - "LDMS - Learning Disability Management System (for educational support)"
+  - "MCMS - Marketing Campaign Management System (for marketing initiatives)"
+  - "MDMS - Membership Directory Management System (for member databases)"
+  - "NCMS - Nursery Care Management System (for plant nursery operations)"
+  - "OCMS - Office Cleaning Management System (for janitorial scheduling)"
+  - "PAMS - Parking Area Management System (for parking lot operations)"
+  - "PDMS - Product Development Management System (for product lifecycle)"
+  - "PEMS - Performance Evaluation Management System (for employee reviews)"
+  - "PHMS - Public Health Management System (for community health tracking)"
+  - "PLMS - Pipeline Management System (for sales or project pipelines)"
+  - "PRMS - Public Relations Management System (for media and PR activities)"
+  - "PTMS - Patient Tracking Management System (for patient flow in clinics)"
+  - "REMS - Real Estate Management System (for property listings and sales)"
+  - "SAMS - Security Access Management System (for access control)"
+  - "SDMS - Service Desk Management System (for IT or customer service desks)"
+  - "SHMS - Safety and Health Management System (for workplace safety)"
+  - "SLMS - Student Loan Management System (for loan tracking)"
+  - "TCMS - Travel Cost Management System (for travel expense tracking)"
+  - "TRMS - Training Resource Management System (for training materials)"
+  - "UCMS - User Complaint Management System (for feedback and complaints)"
+  - "WEMS - Waste and Environment Management System (for waste tracking)"
+  - "ABMS - Affiliate Business Management System (for managing affiliate programs)"
+  - "ACMS - Artisan Craft Management System (for handmade goods businesses)"
+  - "AFMS - Annual Fund Management System (for fundraising goals)"
+  - "AGMS - Agricultural Management System (for small farm operations)"
+  - "ALMS - Alumni Management System (for tracking alumni relations)"
+  - "ANMS - Announcement Management System (for internal notifications)"
+  - "ASMS - Auction Sales Management System (for small auction businesses)"
+  - "ATMS - Artisan Tool Management System (for tool tracking in crafts)"
+  - "AVMS - Audio-Visual Management System (for AV equipment rentals)"
+  - "BAMS - Bakery Management System (for bakery orders and inventory)"
+  - "BBMS - Bed and Breakfast Management System (for small lodging)"
+  - "BEMS - Brand Engagement Management System (for brand interactions)"
+  - "BFMS - Boutique Fashion Management System (for small retail fashion)"
+  - "BLMS - Blog Management System (for blog content scheduling)"
+  - "BRMS - Bar Management System (for small bar operations)"
+  - "BSMS - Business Subscription Management System (for subscription services)"
+  - "CEMS - Community Engagement Management System (for local outreach)"
+  - "CFMS - Coffee Shop Management System (for café operations)"
+  - "CGMS - Consulting Group Management System (for small consultancies)"
+  - "CIMS - Creative Inventory Management System (for art/design stock)"
+  - "CKMS - Cooking Class Management System (for culinary workshops)"
+  - "CLMS - Client Loyalty Management System (for reward programs)"
+  - "CMMS - Craft Market Management System (for market stall tracking)"
+  - "CNMS - Contractor Network Management System (for contractor coordination)"
+  - "CPMS - Copywriting Project Management System (for freelance writers)"
+  - "CRMS - Crisis Response Management System (for emergency planning)"
+  - "CSMS - Craft Supply Management System (for craft material stock)"
+  - "CTMS - Customer Testimonial Management System (for review tracking)"
+  - "CVMS - Custom Vehicle Management System (for auto customization shops)"
+  - "CWMS - Co-Working Management System (for shared workspace ops)"
+  - "DAMS - Digital Advertising Management System (for online ads)"
+  - "DEMS - Design Event Management System (for design showcases)"
+  - "DFMS - Dog-Friendly Management System (for pet-friendly businesses)"
+  - "DGMS - Daycare Group Management System (for small childcare)"
+  - "DLMS - Delivery Logistics Management System (for local deliveries)"
+  - "DMMS - Digital Media Management System (for media production)"
+  - "DRMS - Dispute Resolution Management System (for conflict handling)"
+  - "DSMS - Dropshipping Management System (for e-commerce dropshipping)"
+  - "DTMS - Driver Training Management System (for driving schools)"
+  - "EAMS - E-commerce Analytics Management System (for online sales data)"
+  - "EBMS - Employee Benefit Management System (for small team benefits)"
+  - "EFMS - Eco-Friendly Management System (for sustainable practices)"
+  - "EGMS - Employee Grievance Management System (for HR disputes)"
+  - "EHMS - Employee Happiness Management System (for morale tracking)"
+  - "ELMS - Equipment Lease Management System (for rental equipment)"
+  - "ENMS - Entrepreneur Network Management System (for networking)"
+  - "EPMS - Etsy Product Management System (for Etsy sellers)"
+  - "EVMS - Electric Vehicle Management System (for EV fleet ops)"
+  - "EXMS - Exhibition Management System (for trade show planning)"
+  - "FCMS - Family Care Management System (for elder/childcare services)"
+  - "FDMS - Floral Design Management System (for florist businesses)"
+  - "FEMS - Festival Event Management System (for small festivals)"
+  - "FGMS - Freelance Gig Management System (for gig workers)"
+  - "FHMS - Food Truck Management System (for mobile food vendors)"
+  - "FIMS - Fitness Instructor Management System (for personal trainers)"
+  - "FLMS - Franchise Location Management System (for small franchises)"
+  - "FNMS - Food Nutrition Management System (for meal planning)"
+  - "FPMS - Financial Planning Management System (for small advisors)"
+  - "FTMS - Field Trip Management System (for educational outings)"
+  - "GAMS - Gardening Activity Management System (for landscaping)"
+  - "GBMS - Gift Basket Management System (for gift businesses)"
+  - "GEMS - Guest Experience Management System (for hospitality)"
+  - "GFMS - Gluten-Free Management System (for specialty food prep)"
+  - "GHMS - Greenhouse Management System (for small growers)"
+  - "GIMS - Group Insurance Management System (for small group plans)"
+  - "GLMS - Graphic Logo Management System (for design assets)"
+  - "GPMS - General Practitioner Management System (for small clinics)"
+  - "GRMS - Grocery Retail Management System (for small stores)"
+  - "GSMS - Gift Shop Management System (for retail gift shops)"
+  - "GTMS - Guided Tour Management System (for tour guides)"
+  - "HAMS - Handyman Appointment Management System (for repairs)"
+  - "HBMS - Home Business Management System (for home-based ops)"
+  - "HIMS - Home Inspection Management System (for inspectors)"
+  - "HNMS - Home Nursing Management System (for caregiving)"
+  - "HPMS - Hobby Project Management System (for hobbyist sales)"
+  - "HRMS - Home Rental Management System (for vacation rentals)"
+  - "HSMS - Home Staging Management System (for real estate staging)"
+  - "HTMS - Health Testing Management System (for small labs)"
+  - "HWMS - Handmade Workshop Management System (for craft classes)"
+  - "IEMS - Influencer Engagement Management System (for influencers)"
+  - "IFMS - Interior Fitout Management System (for interior design)"
+  - "IGMS - Instagram Growth Management System (for social media)"
+  - "ILMS - Independent Learning Management System (for tutors)"
+  - "INMS - Innovation Management System (for idea tracking)"
+  - "IOMS - Online Order Management System (for e-commerce)"
+  - "IPMS - Invoice Processing Management System (for billing)"
+  - "IRMS - Interview Recruitment Management System (for hiring)"
+  - "ISMS - Inventory Shelf Management System (for retail stock)"
+  - "ITMS - In-Store Traffic Management System (for foot traffic)"
+  - "JCMS - Jewelry Craft Management System (for jewelers)"
+  - "KCMS - Kitchen Catering Management System (for small kitchens)"
+  - "KDMS - Kids’ Daycare Management System (for preschool care)"
+  - "LAMS - Local Advertising Management System (for local ads)"
+  - "LBMS - Local Business Management System (for community shops)"
+  - "LCMS - Lawn Care Management System (for landscaping services)"
+  - "LDMS - Local Delivery Management System (for courier services)"
+  - "LEMS - Lesson Enrollment Management System (for lessons)"
+  - "LFMS - Local Festival Management System (for community events)"
+  - "LGMS - Local Government Management System (for small councils)"
+  - "LHMS - Local Handyman Management System (for service pros)"
+
+author: "Terrylan Manalansan"
+last_updated: "2025-03-29"
+
+doctrines:
+  - tag: "@Doctrine-Simplicity"
+    description: "Minimize complexity by generating only what’s needed."
+  - tag: "@Doctrine-Security"
+    description: "Ensure secure defaults with configurable enhancements."
+  - tag: "@Doctrine-Extendability"
+    description: "Support extensions via modular design."
+  - tag: "@Doctrine-Lean"
+    description: "Optimize resource usage with lightweight code."
+  - tag: "@Doctrine-Zero-Dependencies"
+    description: "No external packages—just pure PHP."
+    note: "All core components self-contained in /core/."
+  - tag: "@Doctrine-Management-System-Centric"
+    description: "Tailored for systems like ERP, CRM, WMS with role-based workflows."
+  - tag: "@Doctrine-Performance"
+    description: "Lightweight design optimized for low-end systems and fast execution."
+  - tag: "@Doctrine-Grounded-Practical"
+    description: "Generate practical, context-aware solutions tailored to prompter needs, avoiding over-engineering."
+    example:
+      language: "PHP"
+      snippet: |
+        class FeatureToggle {
+            public function isEnabled($feature) {
+                return $config['features'][$feature] ?? false;
+            }
+        }
+  - tag: "@Doctrine-Database-Flexibility"
+    description: "Support seamless switching between lightweight (SQLite) and robust (MariaDB) databases to match prompter expertise and project needs."
+  - tag: "@Doctrine-Incremental-Testable-Growth"
+    description: "Build systems by creating the tree, listing files, and adding them in testable increments—core first, then critical batches—ensuring functionality toward the full vision."
+    example:
+      steps:
+        - "Core: index.php, Router.php, Controller.php, Model.php, Container.php"
+        - "Batch 1: LedgerModel.php, LedgerController.php"
+        - "Batch 2: Auth.php, UserModel.php"
+  - tag: "@Doctrine-Modular-Foundation"
+    description: "Design systems with modularity as the cornerstone, enabling a seamless transition from monolith to microservices as scale demands, ensuring simplicity at small scales and flexibility at larger ones."
+    note: "Supports @Principle-Adaptive-Modular-Scale by structuring code (e.g., app/modules/) for future extraction."
+    example:
+      language: "PHP"
+      snippet: |
+        // app/modules/UserModule.php
+        namespace App\Modules\User;
+        class UserModel extends \Core\Model {
+            public function getUser($id) {
+                return $this->db->query("SELECT * FROM users WHERE id = ?", [$id])->fetch();
+            }
+        }
+
+principles:
+  - tag: "@Principle-Snippet-Modular-Assembly"
+    description: "AI generates projects by composing numbered snippets from a predefined library, outputting YAML with explicit folder/file paths and codes (e.g., '1, 5 /core/Router.php'), processed by a bash script to assemble files and structures. Ensures modularity, reusability, and precise control over code generation."
+    example:
+      language: "YAML"
+      snippet: |
+        folders:
+          - /hello_world/public
+        files:
+          - path: /hello_world/public
+            file: index.php
+            codes: 1, 9 /../core/Router.php
+    usage: "AI outputs a single YAML file with all folders and files, including snippet IDs and variables, for bash script to generate the full project in one pass."
+    benefits:
+      - "Streamlines AI-driven code generation with reusable snippets."
+      - "Enables precise, testable project assembly."
+      - "Supports incremental refinement by adjusting snippet library."
+    alignment:
+      - "@Doctrine-Simplicity: Reduces complexity with predefined snippets."
+      - "@Doctrine-Modular-Foundation: Builds modularly via numbered components."
+      - "@Doctrine-Grounded-Practical: Generates only what’s needed."
+  - tag: "@Principle-Adaptive-Modular-Scale"
+    description: "Start with a modular monolith to ensure simplicity and rapid deployment, transitioning to microservices as scale and complexity demand, balancing practicality with extensibility. This approach adapts architecture to user scale and feature needs, leveraging modularity for incremental growth."
+    example:
+      language: "PHP"
+      snippet: |
+        // Modular Monolith: app/modules/TaskModule.php
+        namespace App\Modules\Task;
+        class TaskController extends \Core\Controller {
+            public function listTasks() {
+                $model = $this->container->get('TaskModel');
+                return $this->render('tasks', ['tasks' => $model->getAll()]);
+            }
+        }
+      transition: |
+        // Microservice: task_service/app/controllers/TaskController.php
+        class TaskController extends \Core\Controller {
+            public function getTasks() {
+                $model = $this->container->get('TaskModel');
+                return json_encode($model->getAll());
+            }
+        }
+    usage: "Deploy a single modular monolith with app/modules/ for 1-50 users on low-to-mid-spec hardware; extract modules (e.g., TaskModule) into standalone services (e.g., task_service/) for 51+ users or high concurrency, using REST APIs for communication."
+    benefits:
+      - "Delivers rapid, testable deployment for micro businesses (1-10 users)."
+      - "Scales efficiently for small businesses (11-50 users) with modular enhancements."
+      - "Prepares medium businesses (51-250 users) for microservices without early complexity."
+    alignment:
+      - "@Doctrine-Simplicity: Starts with a lean monolith."
+      - "@Doctrine-Extendability: Enables modular growth."
+      - "@Doctrine-Grounded-Practical: Avoids over-engineering."
+      - "@Principle-Incremental-Testable-Growth: Builds incrementally toward scale."
+  - tag: "@Principle-Synchronized-Collaboration"
+    description: "AI (coder) executes under prompter (PM) direction, aligning via verify state, target changes, ground updates."
+    example:
+      language: "PHP"
+      snippet: |
+        class TaskController extends Controller {
+            public function add($pmInput) {
+                $this->model->addTask($pmInput['title'], $pmInput['notes']);
+            }
+        }
+  - tag: "@Principle-Align-Target-Ground"
+    description: "Align via state verification, target specific changes, ground in existing code for modular feature injection."
+  - tag: "@Principle-5-Core-Files"
+    description: "Start with five essential files (public/index.php, core/Router.php, core/Controller.php, core/Model.php, core/Container.php) for routing, MVC, and dependency injection."
+  - tag: "@Principle-JavaScript-Integration" 
+    description: "Leverage Phlux as the default JavaScript framework to enhance PHP views with real-time updates, adhering to KISS and DRY by minimizing client-side complexity and reusing server-side logic."
+  - tag: "@Principle-1-Class-1-File"
+    description: "Organize each class in its own file for clarity, maintainability, and adherence to SRP."
+  - tag: "@Principle-Environment-Readiness"
+    description: "Ensure the runtime environment is validated (e.g., PHP extensions, database setup) before execution to prevent setup failures."
+  - tag: "@Principle-DB-Setup-First"
+    description: "Initialize database schema before app execution to avoid runtime errors."
+  - tag: "@SOLID-SRP"
+    description: "Single Responsibility Principle: Each class has one responsibility."
+  - tag: "@SOLID-OCP"
+    description: "Open/Closed Principle: Classes open for extension, closed for modification."
+  - tag: "@SOLID-LSP"
+    description: "Liskov Substitution Principle: Subtypes replaceable without breaking functionality."
+  - tag: "@SOLID-ISP"
+    description: "Interface Segregation Principle: Specific interfaces over bloated ones."
+  - tag: "@SOLID-DIP"
+    description: "Dependency Inversion Principle: High-level modules depend on abstractions."
+  - tag: "@Principle-DRY"
+    description: "Don’t Repeat Yourself: Ensure code reuse."
+  - tag: "@Principle-KISS"
+    description: "Keep It Simple, Stupid: Generate straightforward code."
+  - tag: "@Principle-YAGNI"
+    description: "You Ain’t Gonna Need It: Avoid unnecessary features."
+  - tag: "@Principle-IoC"
+    description: "Inversion of Control: Manage dependencies via container."
+  - tag: "@Principle-DI"
+    description: "Dependency Injection: Inject dependencies."
+  - tag: "@Principle-Sprint-Feature-Clustering"
+    description: "Group complementary features into single sprints for efficiency and synergy, balancing complexity and testability."
+    example:
+      sprint: "Sprint 7"
+      features: "Priority Levels + Categories/Tags"
+      files: "TaskModel.php, task_form.php, tasks.php, TaskController.php, styles.css"
+
+features:
+  - tag: "@Feature-Snippet-Based-Generation"
+    description: "Enables AI to generate projects using a snippet library, outputting a YAML file with folder/file definitions and numbered codes, processed by a bash script to create the full structure and schema."
+    example:
+      file: "generate_project.yml, snippets.json"
+      usage: "AI outputs 'generate_project.yml' with snippet IDs (e.g., '1, 9 /core/Router.php'); bash script builds project."
+    benefits:
+      - "Automates project creation with reusable code blocks."
+      - "Supports portability via JSON snippet storage or MariaDB."
+  - tag: "@Feature-Task-Assignment"
+    description: "Enables assigning tasks to users, with role-based access to user management and visibility of assigned tasks for assignees."
+    example:
+      file: "controllers/TaskController.php, models/TaskModel.php"
+      usage: "Admin assigns task to a user, visible in task list for both creator and assignee."
+    benefits:
+      - "Facilitates collaboration across users."
+      - "Supports role-based workflows."
+  - tag: "@Feature-View-Inheritance"
+    description: "Centralizes common HTML elements (e.g., header with username, navigation) into a single layout file, inherited by all views to reduce duplication and streamline updates."
+    example:
+      file: "core/View.php"
+      usage: "Wraps view files with a shared header/footer containing user login info."
+    benefits:
+      - "Reduces repetitive HTML across views."
+      - "Enables single-point updates for UI elements."
+  - tag: "@Feature-Due-Dates-and-Reminders"
+    description: "Adds due dates to tasks, with visual indicators for overdue tasks; reminders limited to UI where async processing is unavailable."
+    example:
+      file: "models/TaskModel.php, views/tasks.php"
+      usage: "Task due on a specific date turns red if overdue and status isn’t complete."
+    benefits:
+      - "Improves time management for users."
+      - "Adapts to low-spec environments."
+  - tag: "@Feature-Dashboard-Overview"
+    description: "Provides a summary view of tasks (e.g., counts by status) for quick user insight."
+    example:
+      file: "views/dashboard.php, controllers/DashboardController.php"
+      usage: "Shows counts of pending and completed tasks on a dashboard."
+    benefits:
+      - "Enhances visibility of task statuses."
+      - "Offers quick insight without detailed filtering."
+  - tag: "@Feature-Search-and-Filter"
+    description: "Allows searching tasks by title and filtering by status, assignee, or other fields."
+    example:
+      file: "models/TaskModel.php, views/tasks.php"
+      usage: "Search by keyword or filter by assignee."
+    benefits:
+      - "Speeds up task navigation."
+      - "Improves usability with dynamic queries."
+  - tag: "@Feature-Task-Categories-Tags"
+    description: "Adds categorization or tagging to tasks for better organization."
+    example:
+      file: "models/TaskModel.php, views/task_form.php"
+      usage: "Tag task with a category, filter by tag."
+    benefits:
+      - "Enables flexible task grouping."
+      - "Supports custom organization schemes."
+  - tag: "@Feature-Priority-Levels"
+    description: "Assigns priority levels to tasks, with visual cues for emphasis."
+    example:
+      file: "models/TaskModel.php, views/tasks.php"
+      usage: "High-priority task highlighted in list."
+    benefits:
+      - "Highlights critical tasks."
+      - "Enhances task prioritization."
+  - tag: "@Feature-Progress-Tracking"
+    description: "Tracks task completion progress with a visual indicator."
+    example:
+      file: "models/TaskModel.php, views/tasks.php"
+      usage: "Task at 50% completion shows progress bar."
+    benefits:
+      - "Provides granular status tracking."
+      - "Visualizes task advancement."
+  - tag: "@Feature-Attachments"
+    description: "Allows uploading files to tasks, stored locally."
+    example:
+      file: "models/AttachmentModel.php, controllers/AttachmentController.php"
+      usage: "Attach a file to a task, viewable in task details."
+    benefits:
+      - "Enriches task context with supporting files."
+      - "Supports documentation needs."
+  - tag: "@Feature-Recurring-Tasks"
+    description: "Enables tasks to repeat on a schedule with auto-generation on completion."
+    example:
+      file: "models/TaskModel.php, core/Recurrence.php"
+      usage: "Daily task auto-creates next instance upon completion."
+    benefits:
+      - "Automates repetitive tasks."
+      - "Reduces manual task recreation."
+  - tag: "@Feature-Settings-Panel"
+    description: "Provides an admin-only interface to configure system-wide settings, such as toggling features, setting defaults, or managing global preferences."
+    example:
+      file: "controllers/SettingsController.php, views/settings.php"
+      usage: "Admin toggles a feature flag or sets a default value from a centralized panel."
+    benefits:
+      - "Centralizes system configuration for admins."
+      - "Enhances flexibility without code changes."
+  - tag: "@Feature-PWA-Support"
+    description: "Enables Progressive Web App capabilities, allowing the application to be installed on devices, work offline, and provide a native-like experience, generated optionally based on prompter specification."
+    example:
+      file: "public/manifest.json, public/service-worker.js"
+      usage: "User installs the app from the browser; it caches pages for offline access."
+    benefits:
+      - "Improves accessibility on mobile and desktop devices."
+      - "Enhances user experience with offline functionality."
+      - "Reduces dependency on constant server availability."
+  - tag: "@Feature-Serverless-Deployment"
+    description: "Adapts the project for serverless platforms (e.g., AWS Lambda, Vercel), optimizing for event-driven execution and scalability, generated optionally based on prompter selection."
+    example:
+      file: "deploy/serverless.yml, core/ServerlessAdapter.php"
+      usage: "App runs as a serverless function, triggered by HTTP requests or events."
+    benefits:
+      - "Reduces operational costs with pay-per-use scaling."
+      - "Simplifies deployment for high-traffic scenarios."
+      - "Leverages cloud-native infrastructure."
+  - tag: "@Feature-Modular-Monolith"
+    description: "Enhances modularity within a single codebase, allowing feature isolation without transitioning to full microservices, supporting independent development and testing of modules."
+    example:
+      file: "core/ModuleManager.php, app/modules/TaskModule.php"
+      usage: "Task-related logic encapsulated in a module, loaded dynamically by the app."
+    benefits:
+      - "Improves maintainability with clear module boundaries."
+      - "Facilitates incremental refactoring toward microservices if needed."
+      - "Balances simplicity of a monolith with modularity."
+  - tag: "@Feature-Phlux-Integration"  # Added
+    description: "Integrates Phlux as an optional JavaScript framework for real-time DOM updates and client-side interactivity, enhancing PHP-rendered views without altering MVC core."
+    example:
+      file: "public/phlux.min.js, public/app.js"
+      usage: "Phlux updates UI elements (e.g., task lists) via AJAX calls to controllers after user actions."
+    benefits:
+      - "Enables dynamic, responsive UIs for micro and small business apps."
+      - "Reduces server load by handling UI updates client-side."
+      - "Scales efficiently for 1-50 users with minimal overhead."
+  - tag: "@Feature-Modular-Monolith"
+    description: "Enhances modularity within a single codebase, allowing feature isolation without transitioning to full microservices, supporting independent development and testing of modules. Serves as the foundation for @Principle-Adaptive-Modular-Scale."
+    example:
+      file: "core/ModuleManager.php, app/modules/TaskModule.php"
+      usage: "Task-related logic encapsulated in a module, loaded dynamically by the app, ready for extraction as a microservice."
+    benefits:
+      - "Improves maintainability with clear module boundaries."
+      - "Facilitates incremental refactoring toward microservices as per AMS."
+      - "Balances simplicity of a monolith with modularity."
+  - tag: "@Feature-Microservices-Transition"
+    description: "Enables the extraction of modular monolith components into standalone microservices when scale or complexity justifies, adhering to @Principle-Adaptive-Modular-Scale."
+    example:
+      file: "task_service/app/controllers/TaskController.php, task_service/config.php"
+      usage: "Extract app/modules/TaskModule.php into task_service/ with its own MVC structure and database, accessed via REST API."
+    benefits:
+      - "Scales specific domains independently (e.g., tasks for 100 users, users for 50)."
+      - "Supports gradual architectural evolution."
+      - "Leverages existing modular design for minimal rework."
+
+ai_workflow:
+  steps:
+    - step: "Requirement Analysis"
+      description: "AI reads requirements.yml to extract app needs, including whether Phlux is desired for JavaScript enhancements, also assessing user scale and complexity to apply @Principle-Adaptive-Modular-Scale, and maps features to snippet-based outputs."
+    - step: "Snippet Library Loading"
+      description: "AI loads snippet library from JSON or MariaDB based on prompter preference."
+    - step: "Architecture Selection"
+      description: "AI determines initial architecture (modular monolith or microservices) based on user_count, concurrency, and feature complexity, starting with a modular monolith per AMS unless scale exceeds 50 users."
+    - step: "Project Generation"
+      description: "AI outputs a single YAML file with folders, files, and snippet codes for the entire project, including schema."
+    - step: "Feature Selection"
+      description: "AI applies weights from feature_catalog to select features, including @Feature-Phlux-Integration based on need for real-time UI or client-side scale."
+    - step: "Fine-Tuning"
+      description: "AI prompts prompter if requirements.yml lacks key fields or if weights are borderline (e.g., 45-55)."
+      questions:
+        - "Missing data_sensitivity: Should security features be added?"
+        - "Feature weight near threshold (e.g., CAPTCHA at 45): Include it?"
+    - step: "File and Folder Generation"
+      description: "AI builds the project structure (controllers, models, views, core components, optional Phlux files,modules or services ) based on selected features, following SOLID, DRY, KISS, and YAGNI; and AMS, using app/modules/ for monoliths and separate service folders (e.g., task_service/) for microservices."
+    - step: "Schema Generation"
+      description: "AI designs database schema based on use case and selected features (e.g., custom roles for RBAC), including optional authentication fields."
+    - step: "Test Script Generation"
+      description: "AI optionally creates unit and integration tests based on prompter choice, validating selected features and principle compliance."
+    - step: "Deployment Options Generation"
+      description: "AI offers deployment templates (e.g., bash, Docker) based on prompter selection, including initial setup."
+    - step: "Prompter Deployment"
+      description: "Prompter executes the chosen deployment method to set up the system."
+    - step: "Testing and Enhancement"
+      description: "Prompter tests the system; AI refines based on feedback."
+    - step: "Transition Planning"
+      description: "AI outlines a roadmap in SPMP-RAG-PRG.s*.yml for transitioning from modular monolith to microservices, specifying triggers (e.g., user_count > 50) and steps (e.g., extract TaskModule)."
+
+ai_and_prompter_workflow:
+  description: "Collaborative process between AI (coder) and prompter (PM) for building SPMP-RAG projects."
+  steps:
+    - step: "Design Full Folder Tree"
+      description: "AI designs the complete folder and file tree based on prompter’s SPMP-RAG-SRS (software requirement specification) file and prompt."
+      owner: "AI"
+    - step: "Build Placeholder Structure"
+      description: "Prompter creates the folder tree, placeholder files and database by using schema as a starting scaffold."
+      owner: "Prompter"
+    - step: "Map Tasks by Viability"
+      description: "AI lists files in order of feature importance and testing viability for incremental development."
+      owner: "AI"
+      substeps:
+        - "Start with 5 core files (public/index.php, core/Router.php, core/Controller.php, core/Model.php, core/Container.php) for a testable base."
+        - "Add the next critical file or minimal batch testable with the core (e.g., Auth.php for authentication)."
+        - "Include placeholder files for minor dependencies if needed."
+        - "Iterate, adding files/batches incrementally, ensuring each step is testable and aligns with the final vision."
+    - step: "Code and Test Increment"
+      description: "Prompter codes the file or batch, tests functionality, and verifies it meets expectations."
+      owner: "Prompter"
+    - step: "Iterate or Proceed"
+      description: "If satisfied, prompter requests the next file/batch from AI. If not, iterate with AI to refine the current increment."
+      owner: "Prompter + AI"
+
+installation:
+  requirements:
+    - "PHP 8.0+"
+    - "MySQL/MariaDB 5.7+ or SQLite (auto-selected by AI based on scale)"
+    - "Apache/Nginx"
+  ai_generated_config:
+    description: "AI produces a config.php tailored to hardware, user count, and selected features, adhering to Dependency Injection and Inversion of Control."
+    example:
+      language: "PHP"
+      snippet: |
+        $config = [
+            'host' => 'localhost',
+            'dbname' => 'spmp_db',
+            'user' => 'root',
+            'pass' => 'auto_generated_pass',
+            'features' => [
+                'cache' => 'none',  # Options: none, file, redis (prompter-selected)
+                'async' => false,   # Optional Swoole support (prompter-selected)
+                'rbac' => false,    # Optional Role-Based Access Control
+                'force_password_change' => false,  # Configurable (default off for small apps)
+                'forgot_password' => false  # Optional email-based reset
+            ]
+        ];
+
+folder_structure:
+  description: "AI dynamically generates the project tree based on requirements and selected features, adhering to SOLID/DRY/KISS/YAGNI/IoC/DI."
+  template:
+    - path: "/spmp_project"
+      subdirs:
+        - "snippets.json # Optional snippet library if JSON selected"
+        - "SPMP-RAG-SMA.yml # AI-generated output for bash script"
+        - path: "app/"
+          components:
+            - "controllers/ # AI-generated logic (SRP, DRY), e.g., AuthController if auth enabled"
+            - "models/ # AI-generated ORM with optional RBAC/User models (LSP)"
+            - "views/ # AI-generated templates (KISS), e.g., login views if auth enabled"
+            - "modules/ # Modular components (e.g., TaskModule.php) for AMS monolith phase"
+        - path: "core/"
+          components:
+            - "Cache.php # Optional, configured caching (OCP, DRY)"
+            - "DB.php # AI-configured database with optional auth support (DIP/DI)"
+            - "Router.php # AI-configured routing (ISP)"
+            - "Security.php # AI-enabled security based on selected features (SRP)"
+            - "RBAC.php # Optional Role-Based Access Control"
+            - "Container.php # IoC container for dependency management"
+            - "Auth.php # Optional authentication logic"
+        - path: "public/"
+          components:
+            - "index.php # AI-generated entry using IoC"
+            - "phlux.min.js # Phlux core for real-time UI updates (optional, generated if selected)"
+            - "app.js # App-specific Phlux logic (optional, generated if selected)"
+        - path: "task_service/ # Optional microservice phase"
+          components:
+            - "app/controllers/TaskController.php"
+            - "core/ # 5-core-files"
+            - "public/index.php"
+        - path: "tests/"
+          components:
+            - "generated_tests.php # Optional AI-created test suite"
+        - path: "vmods/"  # Optional
+          components:
+            - "ModManager.php # Simplified plugin loader for extensions (OCP)"
+        - "config.php # AI-generated settings with feature toggles"
+        - "deploy/ # Optional deployment templates (e.g., deploy.sh, Dockerfile)"
+
+security:
+  description: "AI embeds configurable PHP security features based on use case and prompter selection, following SRP and DRY."
+  features:
+    - tag: "@CSRF-Protection"
+      method: "Optional; AI injects Security.php with CSRF token logic if enabled."
+    - tag: "@XSS-Prevention"
+      method: "Default; AI applies input sanitization across forms."
+    - tag: "@SQL-Injection"
+      method: "Default; AI uses prepared statements and PDO in DB.php."
+    - tag: "@Session-Security"
+      method: "Optional; AI configures secure session handling if auth enabled."
+    - tag: "@Password-Hashing"
+      method: "Default; AI implements password_hash() if auth enabled."
+    - tag: "@File-Upload-Security"
+      method: "Optional; AI enforces checks if file uploads specified."
+    - tag: "@Header-Security"
+      method: "Optional; AI sets HTTP headers if public-facing app."
+    - tag: "@Input-Validation"
+      method: "Default; AI integrates basic validation, customizable."
+    - tag: "@Error-Reporting"
+      method: "Default; AI disables error display in production."
+    - tag: "@Rate-Limiting"
+      method: "Optional; AI adds throttling if high user count specified."
+
+authentication:
+  description: "AI optionally generates login features based on prompter choice, with configurable password change enforcement."
+  features:
+    - tag: "@Login"
+      method: "Optional; AI generates login with session management if enabled."
+      example:
+        language: "PHP"
+        snippet: |
+          class Auth {
+              private $db;
+              public function __construct(DB $db) {
+                  $this->db = $db;
+              }
+              public function login($username, $password) {
+                  $user = $this->db->query("SELECT * FROM users WHERE username = ?", [$username])->fetch();
+                  if ($user && password_verify($password, $user['password'])) {
+                      session_start();
+                      $_SESSION['user_id'] = $user['id'];
+                      if ($user['force_password_change'] && $config['force_password_change']) {
+                          header("Location: /change-password");
+                          exit;
+                      }
+                      return true;
+                  }
+                  return false;
+              }
+          }
+    - tag: "@Force-Password-Change"
+      method: "Configurable; AI enforces password change if enabled in config."
+    - tag: "@Change-Password"
+      method: "Optional; AI provides password change if auth enabled."
+    - tag: "@Forgot-Password"
+      method: "Optional; AI implements token-based reset if email support specified."
+
+rbac:
+  description: "AI optionally implements Role-Based Access Control with custom roles defined by prompter, adhering to LSP."
+  implementation: "AI generates RBAC.php with role checks if enabled, integrated with Security.php and Auth.php."
+
+schema_example:
+  description: "AI includes schema in the YAML output for one-pass generation."
+  example:
+    use_case: "Hello World"
+    sql: |
+      CREATE TABLE messages (
+          id INT AUTO_INCREMENT PRIMARY KEY,
+          content VARCHAR(255),
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+
+test_example:
+  description: "AI optionally generates test scripts based on prompter choice, focusing on selected features."
+  example:
+    language: "PHP"
+    snippet: |
+      class AuthTest extends PHPUnit\Framework\TestCase {
+          public function testLogin() {
+              $auth = new Auth(new DBMock());
+              $this->assertTrue($auth->login('test', 'pass'));  # Simplified for enabled auth
+          }
+      }
+
+deployment_script_example:
+  description: "AI generates optional deployment templates based on prompter selection."
+  example:
+    language: "Bash"
+    snippet: |
+      #!/bin/bash
+      mkdir -p /var/www/spmp_project
+      cp -r ./* /var/www/spmp_project
+      mysql -u root -p < schema.sql
+      chmod -R 755 /var/www/spmp_project
+
+feature_catalog:
+  description: "Features with weights determining inclusion based on requirements.yml fields."
+  security:
+    - name: "User Authentication"
+      options: ["No", "Yes"]
+      weights:
+        data_sensitivity: { "Low": 0, "Medium": 50, "High": 100 }
+        user_count: { "1-5": 20, "6-50": 50, "51+": 80 }
+      dependencies: []
+    - name: "Login Page"
+      options: ["No", "Yes"]
+      weights:
+        data_sensitivity: { "Low": 0, "Medium": 40, "High": 90 }
+        user_count: { "1-5": 10, "6-50": 40, "51+": 70 }
+      dependencies: ["User Authentication"]
+    - name: "Logout Button"
+      options: ["No", "Yes"]
+      weights:
+        data_sensitivity: { "Low": 0, "Medium": 30, "High": 80 }
+        user_count: { "1-5": 10, "6-50": 30, "51+": 60 }
+      dependencies: ["User Authentication"]
+    - name: "Auto Logout"
+      options: ["No", "Yes"]
+      weights:
+        data_sensitivity: { "Low": 0, "Medium": 20, "High": 70 }
+        access_context: { "Internal": 30, "Public": 50 }
+      dependencies: ["User Authentication"]
+    - name: "Change Password Options"
+      options: ["None", "Admin-only", "User-initiated"]
+      weights:
+        data_sensitivity: { "Low": 0, "Medium": 40, "High": 90 }
+        user_count: { "1-5": 10, "6-50": 40, "51+": 80 }
+      dependencies: ["User Authentication"]
+    - name: "Forgot Password Options"
+      options: ["None", "Email-based", "Token-based"]
+      weights:
+        data_sensitivity: { "Low": 0, "Medium": 30, "High": 80 }
+        access_context: { "Internal": 20, "Public": 60 }
+      dependencies: ["User Authentication"]
+    - name: "Two Factor Authentication"
+      options: ["None", "SMS", "Authenticator"]
+      weights:
+        data_sensitivity: { "Low": 0, "Medium": 20, "High": 80 }
+        access_context: { "Internal": 30, "Public": 70 }
+      dependencies: ["User Authentication"]
+    - name: "CAPTCHA"
+      options: ["None", "On Login", "On Reset"]
+      weights:
+        access_context: { "Internal": 10, "Public": 90 }
+        user_count: { "1-5": 0, "6-50": 30, "51+": 70 }
+      dependencies: ["User Authentication"]
+    - name: "GDPR Compliance"
+      options: ["No", "Yes"]
+      weights:
+        data_sensitivity: { "Low": 0, "Medium": 40, "High": 80 }
+        access_context: { "Internal": 20, "Public": 60 }
+      dependencies: []
+  deployment:
+    - name: "Cloud Deployment"
+      options: ["No", "Yes"]
+      weights:
+        user_count: { "1-5": 10, "6-50": 40, "51+": 80 }
+        low_spec_support: { "Yes": 20, "No": 60 }
+      dependencies: []
+    - name: "Cloud Cost Estimates"
+      options: ["No", "Yes"]
+      weights:
+        cloud_deployment: { "No": 0, "Yes": 80 }
+      dependencies: ["Cloud Deployment"]
+    - name: "Shared Hosting Deployment"
+      options: ["No", "Yes"]
+      weights:
+        user_count: { "1-5": 40, "6-50": 60, "51+": 20 }
+        low_spec_support: { "Yes": 70, "No": 30 }
+      dependencies: []
+    - name: "Local Server Deployment"
+      options: ["No", "Yes"]
+      weights:
+        user_count: { "1-5": 50, "6-50": 40, "51+": 20 }
+        low_spec_support: { "Yes": 60, "No": 30 }
+      dependencies: []
+    - name: "Low Spec Support"
+      options: ["No", "Yes"]
+      weights:
+        hardware_constraints: { "None": 0, "2GB RAM": 80, "4GB RAM": 60 }
+      dependencies: []
+  functionality:
+    - name: "Modular Monolith"
+      options: ["No", "Yes"]
+      weights:
+        user_count: { "1-5": 80, "6-50": 70, "51+": 30 }
+        complexity: { "Low": 90, "Medium": 60, "High": 20 }
+      dependencies: []
+    - name: "Microservices Transition"
+      options: ["No", "Yes"]
+      weights:
+        user_count: { "1-5": 10, "6-50": 40, "51+": 90 }
+        concurrency: { "Low": 20, "Medium": 50, "High": 80 }
+      dependencies: ["Modular Monolith"]
+    - name: "APIs"
+      options: ["No", "Yes"]
+      weights:
+        system_type: { "CMS": 40, "ERP": 60, "Bookkeeping Management System": 50 }
+        user_count: { "1-5": 20, "6-50": 50, "51+": 70 }
+      dependencies: []
+    - name: "Multiple Languages"
+      options: ["No", "Yes"]
+      weights:
+        user_count: { "1-5": 10, "6-50": 40, "51+": 80 }
+        access_context: { "Internal": 20, "Public": 60 }
+      dependencies: []
+    - name: "Dark Theme"
+      options: ["No", "Yes"]
+      weights:
+        user_count: { "1-5": 20, "6-50": 40, "51+": 60 }
+      dependencies: []
+    - name: "High Concurrency Support"
+      options: ["No", "Yes"]
+      weights:
+        user_count: { "1-5": 10, "6-50": 50, "51+": 90 }
+        max_response_time: { "100": 80, "500": 40, "1000": 20 }
+      dependencies: []
+    - name: "Role Based Access Control"
+      options: ["No", "Yes"]
+      weights:
+        user_count: { "1-5": 10, "6-50": 50, "51+": 90 }
+        data_sensitivity: { "Low": 10, "Medium": 40, "High": 80 }
+      dependencies: ["User Authentication"]
+    - name: "External API Integration"
+      options: ["No", "Yes"]
+      weights:
+        system_type: { "CMS": 50, "ERP": 70, "Bookkeeping Management System": 40 }
+        user_count: { "1-5": 20, "6-50": 50, "51+": 70 }
+      dependencies: []
+    - name: "Responsive Design"
+      options: ["No", "Yes"]
+      weights:
+        user_count: { "1-5": 30, "6-50": 60, "51+": 90 }
+        access_context: { "Internal": 40, "Public": 80 }
+      dependencies: []
+    - name: "Dashboard"
+      options: ["No", "Yes"]
+      weights:
+        system_type: { "CMS": 80, "ERP": 90, "Bookkeeping Management System": 85 }
+        user_count: { "1-5": 20, "6-50": 50, "51+": 80 }
+      dependencies: []
+    - name: "Caching"
+      options: ["None", "File", "Redis"]
+      weights:
+        user_count: { "1-5": 10, "6-50": 50, "51+": 90 }
+        max_response_time: { "100": 80, "500": 50, "1000": 20 }
+      dependencies: []
+    - name: "Existing System Integration"
+      options: ["No", "Yes"]
+      weights:
+        system_type: { "CMS": 40, "ERP": 60, "Bookkeeping Management System": 50 }
+        user_count: { "1-5": 20, "6-50": 40, "51+": 60 }
+      dependencies: []
+    - name: "Phlux Integration"  # Added
+      options: ["No", "Yes"]
+      weights:
+        user_count: { "1-5": 30, "6-50": 60, "51+": 80 }  # Higher weight for small businesses needing dynamic UI
+        interactivity: { "Low": 20, "Medium": 50, "High": 90 }  # New field for SRS to indicate UI needs
+      dependencies: []
+  design:
+    - name: "Design Branding"
+      options: ["No", "Yes"]
+      weights:
+        user_count: { "1-5": 20, "6-50": 40, "51+": 60 }
+        access_context: { "Internal": 30, "Public": 70 }
+      dependencies: []
+    - name: "Color Palette"
+      options: ["None", "Custom"]
+      weights:
+        design_branding: { "No": 0, "Yes": 80 }
+      dependencies: ["Design Branding"]
+  performance:
+    - name: "Max Response Time Enforcement"
+      options: ["No", "Yes"]
+      weights:
+        max_response_time: { "100": 90, "500": 60, "1000": 30 }
+      dependencies: []
+    - name: "Hardware Constraints Optimization"
+      options: ["No", "Yes"]
+      weights:
+        hardware_constraints: { "None": 0, "2GB RAM": 90, "4GB RAM": 70 }
+      dependencies: []
+  # Original feature_catalog preserved below
+    - name: "Login"
+      options: ["None", "Basic", "Advanced"]
+      weights:
+        data_sensitivity: { "Low": 0, "Medium": 50, "High": 100 }
+        user_scale: { "1-5": 20, "6-50": 50, "51+": 80 }
+      dependencies: []
+    - name: "2FA"
+      options: ["None", "SMS", "Authenticator"]
+      weights:
+        data_sensitivity: { "Low": 0, "Medium": 20, "High": 80 }
+        access_context: { "Internal": 30, "Public": 70 }
+      dependencies: ["Login"]
+    - name: "CAPTCHA"
+      options: ["None", "On Login", "On Reset"]
+      weights:
+        access_context: { "Internal": 10, "Public": 90 }
+        user_scale: { "1-5": 0, "6-50": 30, "51+": 70 }
+      dependencies: ["Login"]
+    - name: "Caching"
+      options: ["None", "File", "Redis"]
+      weights:
+        user_scale: { "1-5": 10, "6-50": 60, "51+": 90 }
+      dependencies: []
+
+ai_guidelines:
+  description: "Rules for AI to generate code and manage features in SPMP-RAG projects."
+  rules:
+    - "Use tools (e.g., X analysis, web search) only when explicitly requested by prompter."
+    - "Leverage continuously updated knowledge—no strict cutoff."
+    - "For feature selection from feature_catalog:"
+      subrules:
+        - "Calculate total weight for each feature by summing relevant requirement fields (e.g., data_sensitivity, user_count) in requirements.yml."
+        - "Include Phlux if total weight >= 50, generating public/phlux.min.js and public/app.js."
+        - "Ensure Phlux relies on controller endpoints (e.g., /load-posts) rather than direct API files."
+        - "Include feature if total weight >= 50; choose highest-weighted option if multiple exist."
+        - "Respect dependencies (e.g., 2FA requires User Authentication)."
+        - "Override weight-based decisions with explicit values from requirements.yml (e.g., 'two_factor_authentication: None')."
+        - "Map numeric fields to ranges: user_count (1-5: low, 6-50: medium, 51+: high), max_response_time (100ms: fast, 500ms: medium, 1000ms: slow)."
+    - "For large projects (e.g., Guardian Ledger), follow Incremental-Testable-Growth:"
+      steps:
+        - "Create the full folder tree upfront to define project scope."
+        - "List all files to be created, mapping the complete structure."
+        - "Arrange files by testing viability:"
+          substeps:
+            - "Start with 5 core files (public/index.php, core/Router.php, core/Controller.php, core/Model.php, core/Container.php) for a testable base."
+            - "Add the next critical file or minimal batch testable with the core (e.g., authentication or ledger logic)."
+            - "Iterate, adding files/batches incrementally, testing at each step until complete."
+        - "Ensure each increment is functional, aligning with the final vision."
+
+
+
+templates:
+  srs_template:
+    description: "Template for SPMP-RAG-SRS.v*.yml to specify project requirements."
+    example:
+      content: |
+        # SPMP-RAG - Software Requirement Specification
+        **Note to LLM**: This file specifies project requirements. Parse the YAML-like content to determine the use case, scale, and features. Use with `SPMP-RAG-FW.v8.yml`, `SPMP-RAG-GRP.v*.yml`, and `SPMP-RAG-PRG.s*.yml`.
+
+        ```yaml
+        version: "v1"
+        project:
+          name: "Example App"
+          use_case: "Notes-Taking"
+          user_count: 5
+          data_sensitivity: "Low"
+          interactivity: "High"  # Added to trigger Phlux
+        features:
+          authentication: "No"
+          task_categories: "Yes"
+          phlux_integration: "Yes"  # Explicit override
+        ```
+
+  prg_template:
+    description: "Template for SPMP-RAG-PRG.s*.yml to plan and track development progress across sprints."
+    example:
+      content: |
+        # SPMP-RAG v8 - Plan and Development Progress
+        **Note to LLM**: This file tracks the current state of the project. Use with `SPMP-RAG-FW.v8.yml`, `SPMP-RAG-GRP.v*.yml`, and `SPMP-RAG-SRS.v*.yml` to continue progress.
+
+        ```yaml
+        project:
+          name: "Example App"
+          requirements_reference: "See SPMP-RAG-SRS.v*.yml"
+        folder_tree:
+          - path: "/example_app"
+            subdirs:
+              - "app/controllers/"
+              - "app/models/"
+              - "core/"
+              - "public/index.php"
+        schema:
+          - table: "tasks"
+            fields:
+              - "id: INT AUTO_INCREMENT PRIMARY KEY"
+              - "title: VARCHAR(255)"
+        features:
+          - sprint: 1
+            features: ["@Feature-Task-Assignment"]
+            files: ["app/controllers/TaskController.php", "app/models/TaskModel.php"]
+            test: ["Verify by creating a task in the UI and assigning it to a user; check if it appears in the assignee’s task list."]
+            implemented: "no"
+          - sprint: 2
+            features: ["@Feature-Task-Categories-Tags"]
+            files: ["app/models/TaskModel.php", "app/views/task_form.php"]
+            test: ["Verify by adding a category to a task via the form; filter tasks by category to confirm it displays correctly."]
+            implemented: "no"
+          - sprint: 3
+            features: ["@Feature-Dashboard-Overview"]
+            files: ["app/controllers/DashboardController.php", "app/views/dashboard.php"]
+            test: ["Verify by accessing the dashboard; ensure it shows correct counts of tasks by status (e.g., pending, completed)."]
+            implemented: "no"
+        ```
+
+recommendations:
+  - name: "Hardware Optimization"
+    description: "AI tailors features to hardware with prompter input (YAGNI)."
+  - name: "Scale Adaptation"
+    description: "AI adjusts architecture for user count with configurable options (DRY, IoC)."
+  - name: "Scale-Adaptive Architecture"
+    description: "AI applies @Principle-Adaptive-Modular-Scale to tailor the architecture, starting with a modular monolith for micro/small businesses (1-50 users) and recommending microservices for medium businesses (51-250 users) based on prompter input."
